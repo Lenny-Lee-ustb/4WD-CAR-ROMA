@@ -1,0 +1,15 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/roma/asoc-roma/devel/lib/python3/dist-packages",
+        "/opt/ros/noetic/lib/python3/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/roma/asoc-roma/devel/lib/python3/dist-packages",
+        "/opt/ros/noetic/lib/python3/dist-packages"
+    ],
+    "cmake.sourceDirectory": "${workspaceFolder}/src",
+    "files.associations": {
+        "thread": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
+}

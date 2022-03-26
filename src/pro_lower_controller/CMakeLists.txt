@@ -1,0 +1,28 @@
+cmake_minimum_required(VERSION 3.0.2)
+project(pro_lower_controller)
+
+## Compile as C++11, supported in ROS Kinetic and newer
+add_compile_options(-std=c++11)
+
+find_package(catkin REQUIRED COMPONENTS
+  rospy
+  roscpp
+  std_msgs
+  joy
+)
+
+catkin_package(
+)
+
+include_directories(
+# include
+${catkin_INCLUDE_DIRS}
+)
+
+add_executable(pro_lower_platform 
+src/Ramp_Test.cpp 
+src/include/Platform_CAN.hpp
+)
+
+target_link_libraries(pro_lower_platform 
+${catkin_LIBRARIES})
