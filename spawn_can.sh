@@ -1,5 +1,5 @@
 #! /usr/bin/expect -f
-set timeout 1                
+set timeout 1              
 spawn sudo ip link set can0 up type can bitrate 1000000
 expect "password for romacar:"
 send "1234\r"

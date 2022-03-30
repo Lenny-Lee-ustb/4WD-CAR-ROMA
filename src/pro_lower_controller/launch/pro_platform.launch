@@ -1,0 +1,6 @@
+<launch>
+    <node pkg="joy" type="joy_node" name="joy_node" />
+    <node pkg="pro_lower_controller" type="pro_lower_platform" name="pro_lower_platform" required="true" output="screen" >
+        <param name = "vt_max" type="float" value = "50.0"/>
+    <node/>
+</launch>

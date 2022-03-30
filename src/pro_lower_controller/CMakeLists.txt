@@ -5,9 +5,9 @@ project(pro_lower_controller)
 add_compile_options(-std=c++11)
 
 find_package(catkin REQUIRED COMPONENTS
+  dynamixel_sdk
   rospy
   roscpp
-  std_msgs
   joy
 )
 
@@ -19,10 +19,17 @@ include_directories(
 ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(pro_lower_platform 
+add_executable(Ramp_Test 
 src/Ramp_Test.cpp 
 src/include/Platform_CAN.hpp
 )
+target_link_libraries(Ramp_Test 
+${catkin_LIBRARIES})
 
+add_executable(pro_lower_platform 
+src/Platform_control.cpp 
+src/include/Platform_CAN.hpp
+src/include/Platform_servo.hpp
+)
 target_link_libraries(pro_lower_platform 
 ${catkin_LIBRARIES})

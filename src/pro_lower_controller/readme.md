@@ -8,3 +8,8 @@ signalCallback: shutdown the node and set Stopflag
 ### src/Ramp_Test.cpp - genrate ramp signal for motor  
 Be care of the Motor_ramp in main!!
 
+### Model Parameter
+Length:
+Width:
+Max Steering angle:
+

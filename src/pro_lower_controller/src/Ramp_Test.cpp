@@ -31,7 +31,9 @@ void rxThread(int s){
             MotorInfo.polygon.points[ID].z = float(motor[ID].curRx)/16384.0*20.0;  // -16384~0~16384 -> -20-0-20A
 
         }
+        if(i%4==0){
         motorInfoPub.publish(MotorInfo);
+        }
 		std::this_thread::sleep_for(std::chrono::nanoseconds(10000));
     }
     
@@ -89,7 +91,7 @@ int main(int argc, char** argv) {
 	struct ifreq ifr;
     std::string canSeries="can0";
     double dt = 10.0;
-    int16_t maxcur = 16384;
+    int16_t maxcur = 0.05*16384;
     // int16_t maxcur = 16384;
 
 	ros::init(argc,argv,"Ramp_Test");
@@ -120,12 +122,8 @@ int main(int argc, char** argv) {
     sleep(1);
 	std::thread canTx(txThread, s);
 	std::thread canRx(rxThread, s);
-    
-    Motor_Ramp(2, 0);
-    Motor_Ramp(0.01, maxcur);
-    Motor_Ramp(2, 0);
+    sleep(1);
     Motor_Ramp(dt, maxcur);
-    Motor_Ramp(2, 0);
 
 	while (ros::ok())
     {

@@ -7,9 +7,14 @@
         "/home/roma/asoc-roma/devel/lib/python3/dist-packages",
         "/opt/ros/noetic/lib/python3/dist-packages"
     ],
-    "cmake.sourceDirectory": "${workspaceFolder}/src",
+    "cmake.sourceDirectory": "${workspaceFolder}/src/pro_lower_controller",
     "files.associations": {
-        "thread": "cpp"
+        "thread": "cpp",
+        "chrono": "cpp",
+        "bitset": "cpp",
+        "optional": "cpp",
+        "complex": "cpp",
+        "streambuf": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
