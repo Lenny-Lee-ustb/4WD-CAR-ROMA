@@ -42,7 +42,7 @@ struct Motor3508
 
 	double tor, torDes, torConst; // tor = K*cur
     double speed, speedDes, speedLast, speedErr; // m/s
-	double D_speed = 0.8;
+	double D_speed = 1.0;
 	double I_speed = 0.0; // parameter
 
 };

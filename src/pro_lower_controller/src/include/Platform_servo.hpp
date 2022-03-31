@@ -21,13 +21,13 @@
 #define TORQUE_ENABLE                   1                   // Value for enabling the torque
 #define TORQUE_DISABLE                  0                   // Value for disabling the torque
 
-#define DXL_FL_MINIMUM_POSITION_VALUE      1652             // FL ID 0  MIN
-#define DXL_FL_MID_POSITION_VALUE          2056             // FL ID 0  MIDDLE
-#define DXL_FL_MAXIMUM_POSITION_VALUE      2318              // FL ID 0  MAX
+#define DXL_FL_MINIMUM_POSITION_VALUE      1122             // FL ID 0  MIN
+#define DXL_FL_MID_POSITION_VALUE          1521             // FL ID 0  MIDDLE
+#define DXL_FL_MAXIMUM_POSITION_VALUE      1938              // FL ID 0  MAX
 
-#define DXL_FR_MINIMUM_POSITION_VALUE      3175             // FR ID 1  MIN
-#define DXL_FR_MID_POSITION_VALUE          3594             // FR ID 1  MIDDLE
-#define DXL_FR_MAXIMUM_POSITION_VALUE      3948              // FR ID 1  MAX
+#define DXL_FR_MINIMUM_POSITION_VALUE      2711             // FR ID 1  MIN
+#define DXL_FR_MID_POSITION_VALUE          3066             // FR ID 1  MIDDLE
+#define DXL_FR_MAXIMUM_POSITION_VALUE      3491              // FR ID 1  MAX
 
 #define DXL_RESOLUTION                     4096 // resolution of the servo
 

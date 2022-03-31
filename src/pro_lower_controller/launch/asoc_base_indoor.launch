@@ -1,10 +1,15 @@
 <?xml version="1.0"?>
 <launch>
-    <node pkg="joy" type="joy_node" name="joy_node" />
-    <node pkg="pro_lower_controller" type="pro_lower_platform" name="pro_lower_platform" required="true" output="screen" />
-    <remap from="/camera/odom/sample" to="/odometry/filtered"/>
+    <!--Load fixed path !!  -->
+    <node pkg="path_load" type="path_load.py" name="path_loader" >
+        <param name="file_path" value="$(find path_load)/src/data_curve.csv" />
+        <param name="pub_hz" value="1" />
+    </node>
 
-    <node pkg="rviz" type="rviz" name="display" args="-d $(find pro_lower_controller)/rviz/odom.rviz" required="true"/>
+    <remap from="/camera/odom/sample" to="/odometry/filtered"/>
+    
+    <!-- rviz -->
+    <node pkg="rviz" type="rviz" name="display" args="-d $(find localization)/rviz/navigation.rviz" required="true"/>
 
     <!-- broadcast map->odom tf -->
     <node pkg="tf2_ros" type="static_transform_publisher" 
@@ -12,6 +17,7 @@
     <node pkg="tf2_ros" type="static_transform_publisher" 
         name="base_static_transform_publisher" args="-0.1 0 -0.25 0  0 0 camera_link base_link " />    
 
+    <!-- Load Camera !! -->
     <include file="$(find realsense2_camera)/launch/rs_t265.launch"/>
 
 </launch>

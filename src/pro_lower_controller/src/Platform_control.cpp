@@ -3,8 +3,8 @@
 
 #define CAR_LENGTH 0.404 //m
 #define CAR_WIDTH 0.281 //m
-#define MAX_STEER 0.4 //rad
-#define MIN_STEER -0.4 //rad
+#define MAX_STEER 0.6 //rad
+#define MIN_STEER -0.6 //rad
 #define MOTOR_RATIO 5.18 // input/output
 #define WHEEL_RADIUS 0.07 // wheel radius of 1/10 car
 #define WHEEL_OFFSET 0.03
@@ -16,7 +16,7 @@ ros::Subscriber joySub, simulinkSub;
 geometry_msgs::PolygonStamped MotorInfo;
 sensor_msgs::Temperature MotorTemp;
 double temp, tempLast, tempAlpha = 0.05;
-double speedMax = 3.0, speedMin = -0.5;
+double speedMax = 4.0, speedMin = -1.0;
 double vt_cmd,delta_cmd;
 
 Motor3508 motor[4];
@@ -263,10 +263,10 @@ int rxServoThread(){
                 {
                     ROS_WARN("dxl_error: %d",dxl_error);
                 }
-                else
-                {
-                    ROS_INFO("Dynamixel#%d has been successfully sended \n", DXL_FR_ID);
-                }
+                // else
+                // {
+                //     ROS_INFO("Dynamixel#%d has been successfully sended \n", DXL_FR_ID);
+                // }
             dxl_comm_result = packetHandler->write4ByteTxRx(portHandler, DXL_FR_ID, ADDR_PRO_GOAL_POSITION,servo[1].posTx, &dxl_error);
             if (dxl_comm_result != COMM_SUCCESS)
                 {
