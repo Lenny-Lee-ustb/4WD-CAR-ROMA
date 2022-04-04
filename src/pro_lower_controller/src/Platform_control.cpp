@@ -1,4 +1,4 @@
-# include"include/Platform_CAN.hpp"
+# include"include/Platform_M3508.hpp"
 # include"include/Platform_servo.hpp"
 
 #define CAR_LENGTH 0.404 //m
@@ -7,8 +7,9 @@
 #define MIN_STEER -0.6 //rad
 #define MOTOR_RATIO 5.18 // input/output
 #define WHEEL_RADIUS 0.07 // wheel radius of 1/10 car
-#define WHEEL_OFFSET 0.03
-// max_speed 12m/s 9000rpm
+#define WHEEL_OFFSET 0.03 //m
+#define MAX_SPPED 12.0 // 12.0m/s at 9000rpm
+
 
 
 ros::Publisher motorInfoPub, servoInfoPub;
@@ -17,13 +18,15 @@ geometry_msgs::PolygonStamped MotorInfo;
 sensor_msgs::Temperature MotorTemp;
 double temp, tempLast, tempAlpha = 0.05;
 double speedMax = 4.0, speedMin = -1.0;
+double frictionTor = 0.020;
+double a_1,b_0,b_1; 	// coefficient for low pass filter
 double vt_cmd,delta_cmd;
 
 Motor3508 motor[4];
 DynamixelServo servo[2];
 
 void joyCB(const sensor_msgs::Joy::ConstPtr& joy){
-    vt_cmd = joy->axes[1]*speedMax; 
+    vt_cmd = joy->axes[1]*speedMax + joy->buttons[1]*1.0; 
     delta_cmd = joy->axes[3]*MAX_STEER;
 }
 
@@ -68,10 +71,10 @@ void BodytoWheel(double vt, double deltaF){
     motor[1].speedDes = -vFR;
     motor[2].speedDes = -vRR;
     motor[3].speedDes = vRL;
-    motor[0].torDes = 0.018;
-    motor[1].torDes = -0.018;
-    motor[2].torDes = -0.018;
-    motor[3].torDes = 0.018;
+    motor[0].torDes = motor[0].torConst;
+    motor[1].torDes = -motor[1].torConst;
+    motor[2].torDes = -motor[2].torConst;
+    motor[3].torDes = motor[3].torConst;
     // ROS_INFO("FL: %.2f, FR: %.2f, RL: %.2f, RR: %.2f", vFL,vFR,vRL,vRR);
 
     for (int i = 0; i < 4; i++)
@@ -105,20 +108,27 @@ void rxMotorThread(int s){
             motor[ID].speed = WHEEL_RADIUS * (motor[ID].velRx / MOTOR_RATIO) * (2.0 * PI/60.0);
             motor[ID].tor = K * motor[ID].curRx / 16384.0 * 20.0;
 
-            MotorTemp.temperature = double(motor[ID].thermalRx) * tempAlpha + tempLast*(1-tempAlpha);
+            motor[ID].speedF = LowPassFilter(motor[ID], motor[ID].speedF_Last, motor[ID].speed, motor[ID].speedLast);
+            motor[ID].torF = LowPassFilter(motor[ID], motor[ID].torF_Last, motor[ID].tor, motor[ID].torLast);
+
+            MotorTemp.temperature = double(motor[ID].thermalRx) *(1-tempAlpha) + tempLast* tempAlpha ;
             tempLast = MotorTemp.temperature;
+            motor[ID].speedLast = motor[ID].speed;
+            motor[ID].speedF_Last = motor[ID].speedF;
+            motor[ID].torLast = motor[ID].tor;
+            motor[ID].torF_Last = motor[ID].torF;
 
             // due to the configuration, it needs change the direction
             if ((ID==1) || (ID==2))
             {
-                MotorInfo.polygon.points[ID].x = -motor[ID].speed;
-                MotorInfo.polygon.points[ID].y = -motor[ID].tor; 
+                MotorInfo.polygon.points[ID].x = -motor[ID].speedF;
+                MotorInfo.polygon.points[ID].y = -motor[ID].torF; 
                 MotorInfo.polygon.points[ID].z = MotorTemp.temperature;
             }
             else if ((ID==0) || (ID==3))
             {
-                MotorInfo.polygon.points[ID].x = motor[ID].speed; // m/s
-                MotorInfo.polygon.points[ID].y = motor[ID].tor;  // -16384~0~16384 -> -20-0-20A -> -1.626 - 1.626Nm
+                MotorInfo.polygon.points[ID].x = motor[ID].speedF; // m/s
+                MotorInfo.polygon.points[ID].y = motor[ID].torF;  // -16384~0~16384 -> -20-0-20A -> -1.626 - 1.626Nm
                 MotorInfo.polygon.points[ID].z = MotorTemp.temperature;  // 'c
             }
         }

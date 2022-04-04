@@ -1,4 +1,4 @@
-# include"include/Platform_CAN.hpp"
+# include"include/Platform_M3508.hpp"
 
 ros::Publisher motorInfoPub;
 geometry_msgs::PolygonStamped MotorInfo;

@@ -40,11 +40,12 @@ struct Motor3508
     int16_t curRx, velRx, angleRx, curTx;
     int8_t thermalRx; // Monitor thermal
 
-	double tor, torDes, torConst; // tor = K*cur
-    double speed, speedDes, speedLast, speedErr; // m/s
+	double tor, torLast, torF, torF_Last, torDes, torConst; // tor = K*cur
+    double speed, speedLast, speedF, speedF_Last, speedDes, speedErr; // m/s
 	double D_speed = 1.0;
 	double I_speed = 0.0; // parameter
 
+	double a_1=0.828,b_0=0.086,b_1=0.086;
 };
 
 int16_t MotorTune(Motor3508 &m){
@@ -60,6 +61,14 @@ int16_t MotorTune(Motor3508 &m){
 	T_ref = std::min(std::max(T_ref, M3508_T_MIN), M3508_T_MAX);
 	iqref = (int16_t) round(T_ref/K*(16384.0/20.0));
 	return iqref;
+}
+
+double LowPassFilter(Motor3508 &m, double yLast, double x, double xLast){
+	// low-pass filter for motor's sensor, ylast is the last estimate value, x is observed value
+	double f;
+	// y_{n} = a_1 * y_{n-1} + b_0 * x_{n} + b_1 * x_{n-1}
+	f = m.a_1 * yLast + m.b_0 * x + m.b_1 * xLast;
+	return f;
 }
 
 void M3508_SendZero(int s)
