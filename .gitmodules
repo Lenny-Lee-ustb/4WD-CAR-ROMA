@@ -1,0 +1,3 @@
+[submodule "src/sbus_serial"]
+	path = src/sbus_serial
+	url = https://github.com/jenswilly/sbus_serial.git
