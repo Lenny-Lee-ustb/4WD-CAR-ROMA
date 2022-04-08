@@ -13,3 +13,5 @@ Length:
 Width:
 Max Steering angle:
 
+
+sudo apt install ros-noetic-dynamixel-sdk ros-noetic-joy
