@@ -1,3 +1,6 @@
 [submodule "src/sbus_serial"]
 	path = src/sbus_serial
 	url = https://github.com/jenswilly/sbus_serial.git
+[submodule "src/rplidar_ros"]
+	path = src/rplidar_ros
+	url = https://github.com/Slamtec/rplidar_ros.git
