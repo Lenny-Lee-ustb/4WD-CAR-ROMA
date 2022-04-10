@@ -271,7 +271,7 @@ int rxServoThread(){
                 }
                 else if (dxl_error != 0)
                 {
-                    ROS_WARN("dxl_error: %d",dxl_error);
+                    ROS_WARN("dxl_error[%d]: %d",DXL_FL_ID,dxl_error);
                 }
                 // else
                 // {
@@ -284,7 +284,7 @@ int rxServoThread(){
                 }
                 else if (dxl_error != 0)
                 {
-                    ROS_WARN("dxl_error: %d",dxl_error);
+                    ROS_WARN("dxl_error[%d]: %d",DXL_FR_ID,dxl_error);
                 }
             // if (/* condition */)
             // {
@@ -309,15 +309,15 @@ int main(int argc, char** argv) {
     std::string canSeries="can0";
 
 	ros::init(argc,argv,"Pro_platform_controller");
-	ros::NodeHandle n;
+	ros::NodeHandle n("~");
 	ros::Rate loop_rate(100);
-    joySub = n.subscribe<sensor_msgs::Joy>("joy", 10, joyCB);
-    simulinkSub = n.subscribe<geometry_msgs::Twist>("Simulink_cmd", 10, cmdCB);
-    motorInfoPub = n.advertise<geometry_msgs::PolygonStamped>("M3508_Rx_State", 10);
+    joySub = n.subscribe<sensor_msgs::Joy>("/joy", 10, joyCB);
+    simulinkSub = n.subscribe<geometry_msgs::Twist>("/Simulink_cmd", 10, cmdCB);
+    motorInfoPub = n.advertise<geometry_msgs::PolygonStamped>("/M3508_Rx_State", 10);
     MotorInfo.polygon.points.resize(4);
     signal(SIGINT, signalCallback);
 
-    // fet param from ros 
+    // get param from ros 
     n.getParam("canSeries", canSeries);
     n.getParam("speedMax",speedMax);
     n.getParam("speedMin",speedMin);

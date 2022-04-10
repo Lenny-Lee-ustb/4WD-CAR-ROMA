@@ -6,7 +6,6 @@ find_package(catkin REQUIRED COMPONENTS
 	std_msgs
 	message_generation
 	controller_manager
-	gazebo_ros
 	slam_karto
 	gmapping
 	amcl
