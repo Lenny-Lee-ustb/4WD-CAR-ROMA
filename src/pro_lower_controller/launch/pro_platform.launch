@@ -4,16 +4,19 @@
     <node pkg="joy" type="joy_node" name="joy_node" />
 
     <!-- spawn controller node -->
-    <node pkg="pro_lower_controller" type="pro_lower_platform" name="pro_lower_platform" required="true" output="screen" />
+    <!-- <node pkg="pro_lower_controller" type="pro_lower_platform" name="pro_lower_platform" required="true" output="screen" /> -->
 
 
     <node pkg="rviz" type="rviz" name="display" args="-d $(find pro_lower_controller)/rviz/odom.rviz" required="true"/>
 
     <!-- broadcast map->odom tf -->
-    <node pkg="tf2_ros" type="static_transform_publisher" 
-        name="odom_static_transform_publisher" args="0 0 0 1.5708 0 0 map camera_odom_frame " />
+    <!-- <node pkg="tf2_ros" type="static_transform_publisher" 
+        name="odom_static_transform_publisher" args="0 0 0 1.5708 0 0 map camera_odom_frame " /> -->
     <node pkg="tf2_ros" type="static_transform_publisher" 
         name="base_static_transform_publisher" args="-0.1 0 -0.25 0  0 0 camera_link base_link " />    
+    <node pkg="tf2_ros" type="static_transform_publisher" 
+        name="laser_static_transform_publisher" args="-0.1 0 -0.25 0  0 0 base_link laser" />        
+    
     <remap from="/camera/odom/sample" to="/odometry/filtered"/>
     
     <include file="$(find realsense2_camera)/launch/rs_t265.launch"/>
