@@ -1,5 +1,7 @@
 # include"include/Platform_M3508.hpp"
 # include"include/Platform_servo.hpp"
+#include "include/sbus_serial_driver.h"
+#include "include/Sbus.h"
 
 #define CAR_LENGTH 0.404 //m
 #define CAR_WIDTH 0.281 //m
@@ -13,11 +15,11 @@
 
 
 ros::Publisher motorInfoPub, servoInfoPub;
-ros::Subscriber joySub, simulinkSub;
+ros::Subscriber joySub, simulinkSub, sbusSub;
 geometry_msgs::PolygonStamped MotorInfo;
 sensor_msgs::Temperature MotorTemp;
 double temp, tempLast, tempAlpha = 0.05;
-double speedMax = 4.0, speedMin = -1.0;
+double speedMax = 0.0, speedMin = -0.0;
 double frictionTor = 0.020;
 double a_1,b_0,b_1; 	// coefficient for low pass filter
 double vt_cmd,delta_cmd;
@@ -28,6 +30,13 @@ DynamixelServo servo[2];
 void joyCB(const sensor_msgs::Joy::ConstPtr& joy){
     vt_cmd = joy->axes[1]*speedMax + joy->buttons[1]*1.0; 
     delta_cmd = joy->axes[3]*MAX_STEER;
+}
+
+void sbusCB(const sbus_serial::Sbus::ConstPtr& sbus){
+    // vt_cmd = sbus->mappedChannels[2]*speedMax/1000;
+    // delta_cmd = (sbus->mappedChannels[1] - 500) * MAX_STEER / 500;
+    vt_cmd = (sbus->mappedChannels[1] - 500)*speedMax/500;
+    delta_cmd = -(sbus->mappedChannels[0] - 500) * MAX_STEER / 500;   
 }
 
 void cmdCB(geometry_msgs::Twist cmd_vel){
@@ -312,6 +321,7 @@ int main(int argc, char** argv) {
 	ros::NodeHandle n("~");
 	ros::Rate loop_rate(100);
     joySub = n.subscribe<sensor_msgs::Joy>("/joy", 10, joyCB);
+    sbusSub = n.subscribe<sbus_serial::Sbus>("/sbus", 100, sbusCB);
     simulinkSub = n.subscribe<geometry_msgs::Twist>("/Simulink_cmd", 10, cmdCB);
     motorInfoPub = n.advertise<geometry_msgs::PolygonStamped>("/M3508_Rx_State", 10);
     MotorInfo.polygon.points.resize(4);

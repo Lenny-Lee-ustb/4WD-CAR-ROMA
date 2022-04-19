@@ -1,0 +1,2 @@
+pro_lower_controller:rplidar_ros:sbus_serial:slam_sim_demo
+-DCATKIN_DEVEL_PREFIX=/home/car/4WD-CAR-ROMA/devel -DCMAKE_INSTALL_PREFIX=/home/car/4WD-CAR-ROMA/install -G Unix Makefiles

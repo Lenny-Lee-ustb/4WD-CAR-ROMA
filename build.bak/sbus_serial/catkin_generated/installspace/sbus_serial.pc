@@ -1,0 +1,8 @@
+prefix=/home/car/4WD-CAR-ROMA/install
+
+Name: sbus_serial
+Description: Description of sbus_serial
+Version: 1.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: roscpp std_msgs

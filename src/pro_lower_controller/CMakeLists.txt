@@ -9,24 +9,27 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   roscpp
   joy
+  message_generation
 )
 
 catkin_package(
 )
 
 include_directories(
-# include
+include
+../../../devel/include
 ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(Ramp_Test 
-src/Ramp_Test.cpp 
-src/include/Platform_M3508.hpp
-)
-target_link_libraries(Ramp_Test 
-${catkin_LIBRARIES})
+#add_executable(Ramp_Test 
+#src/Ramp_Test.cpp 
+#src/include/Platform_M3508.hpp
+#)
+#target_link_libraries(Ramp_Test 
+#${catkin_LIBRARIES})
 
 add_executable(pro_lower_platform 
+src/sbus_serial_driver.cpp
 src/Platform_control.cpp 
 src/include/Platform_M3508.hpp
 src/include/Platform_servo.hpp

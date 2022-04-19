@@ -22,6 +22,7 @@
 #include <linux/can.h>
 #include <linux/can/raw.h>
 
+#include "std_msgs/String.h"
 #include <sensor_msgs/Joy.h>
 #include <geometry_msgs/Twist.h>
 #include <geometry_msgs/PolygonStamped.h>
