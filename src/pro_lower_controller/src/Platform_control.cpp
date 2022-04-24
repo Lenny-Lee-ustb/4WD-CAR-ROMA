@@ -10,7 +10,8 @@
 #define MOTOR_RATIO 5.18 // input/output
 #define WHEEL_RADIUS 0.07 // wheel radius of 1/10 car
 #define WHEEL_OFFSET 0.03 //m
-#define MAX_SPPED 12.0 // 12.0m/s at 9000rpm
+#define MAX_SPPED 5.0 // 12.0m/s at 9000rpm
+#define MIN_SPPED -1.0 // 12.0m/s at 9000rpm
 
 
 
@@ -33,10 +34,55 @@ void joyCB(const sensor_msgs::Joy::ConstPtr& joy){
 }
 
 void sbusCB(const sbus_serial::Sbus::ConstPtr& sbus){
-    // vt_cmd = sbus->mappedChannels[2]*speedMax/1000;
-    // delta_cmd = (sbus->mappedChannels[1] - 500) * MAX_STEER / 500;
-    vt_cmd = (sbus->mappedChannels[1] - 500)*speedMax/500;
-    delta_cmd = -(sbus->mappedChannels[0] - 500) * MAX_STEER / 500;   
+    int speed_in, steer_in, moveable_in, direct_in = 0;
+    double vt_in, delta_in = 0;
+    bool failsafe, frame_lost = 0;
+    int deadband_speed = 30;
+    int deadband_steer = 5;
+
+    speed_in = sbus->mappedChannels[2];
+    steer_in = sbus->mappedChannels[3];
+    steer_in = steer_in - 500;
+    // remap steer angle to symatric[-500, 500]
+    moveable_in = sbus->mappedChannels[6];
+    direct_in = sbus->mappedChannels[7];
+    failsafe = sbus->failsafe;
+    frame_lost = sbus->frame_lost;
+    // signal inout and store
+    if (moveable_in == 0 || failsafe == 1 || frame_lost == 1){
+        vt_cmd = 0.0;
+        delta_cmd = 0.0;
+        if (failsafe == 1 || frame_lost == 1){
+            ROS_ERROR("RC SIGNAL LOST!!! Check RC status!");
+        }
+        else if (moveable_in == 0){
+            ROS_ERROR("RC NOT enable, please toggle SWA to down!!");
+        }
+        
+        
+        ROS_WARN("input speed is: %lf, %d", vt_cmd, speed_in);
+        ROS_WARN("input steer is: %lf, %d", delta_cmd, steer_in);
+    }
+    else{
+        if (speed_in - deadband_speed <= 0)
+        {
+            vt_cmd = 0;
+        }
+        else
+        {
+            if(direct_in<500){
+                vt_cmd = double(speed_in - deadband_speed)/double(1000 - deadband_speed) * MAX_SPPED;
+            }
+            else if(direct_in>500){
+                vt_cmd = double(speed_in - deadband_speed)/double(1000 - deadband_speed) * MIN_SPPED;
+            }
+        }
+        delta_cmd = -double(steer_in) / 500 * MAX_STEER;
+        ROS_INFO("input speed is: %lf, %d", vt_cmd, speed_in);
+        ROS_INFO("input steer is: %lf, %d", delta_cmd, steer_in);
+        
+    }
+
 }
 
 void cmdCB(geometry_msgs::Twist cmd_vel){
