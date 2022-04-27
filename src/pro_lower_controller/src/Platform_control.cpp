@@ -77,7 +77,7 @@ void sbusCB(const sbus_serial::Sbus::ConstPtr& sbus){
                 vt_cmd = double(speed_in - deadband_speed)/double(1000 - deadband_speed) * MIN_SPPED;
             }
         }
-        delta_cmd = -double(steer_in) / 500 * MAX_STEER;
+        delta_cmd = double(steer_in) / 500 * MAX_STEER;
         ROS_INFO("input speed is: %lf, %d", vt_cmd, speed_in);
         ROS_INFO("input steer is: %lf, %d", delta_cmd, steer_in);
         

@@ -13,21 +13,21 @@
 #define PROTOCOL_VERSION                2.0                 // See which protocol version is used in the Dynamixel
 
 // Default setting
-#define BAUDRATE                        2000000
+#define BAUDRATE                        1000000
 #define DEVICENAME                     "/dev/servo"      // Check which port is being used on your controller
 
 #define TORQUE_ENABLE                   1                   // Value for enabling the torque
 #define TORQUE_DISABLE                  0                   // Value for disabling the torque
 
 #define DXL_FL_ID                          0                   // Dynamixel#Fl ID: 0
-#define DXL_FL_MINIMUM_POSITION_VALUE      1155             // FL ID 0  MIN
-#define DXL_FL_MID_POSITION_VALUE          1536             // FL ID 0  MIDDLE
-#define DXL_FL_MAXIMUM_POSITION_VALUE      1920              // FL ID 0  MAX
+#define DXL_FL_MINIMUM_POSITION_VALUE      2668             // FL ID 0  MIN
+#define DXL_FL_MID_POSITION_VALUE          3072             // FL ID 0  MIDDLE
+#define DXL_FL_MAXIMUM_POSITION_VALUE      3489              // FL ID 0  MAX
 
 #define DXL_FR_ID                          1                   // Dynamixel#Fr ID: 1
-#define DXL_FR_MINIMUM_POSITION_VALUE      2086             // FR ID 1  MIN
-#define DXL_FR_MID_POSITION_VALUE          2560             // FR ID 1  MIDDLE
-#define DXL_FR_MAXIMUM_POSITION_VALUE      2947              // FR ID 1  MAX
+#define DXL_FR_MINIMUM_POSITION_VALUE      1624             // FR ID 1  MIN
+#define DXL_FR_MID_POSITION_VALUE          2080             // FR ID 1  MIDDLE
+#define DXL_FR_MAXIMUM_POSITION_VALUE      2446              // FR ID 1  MAX
 
 #define DXL_RESOLUTION                     4096 // resolution of the servo
 
