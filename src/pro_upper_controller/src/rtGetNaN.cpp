@@ -7,9 +7,9 @@
  *
  * Code generation for model "pro_upper_controller".
  *
- * Model version              : 1.9
+ * Model version              : 1.10
  * Simulink Coder version : 9.7 (R2022a) 13-Nov-2021
- * C++ source code generated on : Tue Apr 26 17:16:28 2022
+ * C++ source code generated on : Wed Apr 27 12:54:17 2022
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping

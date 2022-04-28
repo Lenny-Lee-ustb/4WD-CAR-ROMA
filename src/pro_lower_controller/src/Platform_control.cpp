@@ -17,7 +17,7 @@
 
 ros::Publisher motorInfoPub, servoInfoPub;
 ros::Subscriber joySub, simulinkSub, sbusSub;
-geometry_msgs::PolygonStamped MotorInfo;
+geometry_msgs::PolygonStamped MotorInfo, ServoInfo;
 sensor_msgs::Temperature MotorTemp;
 double temp, tempLast, tempAlpha = 0.05;
 double speedMax = 0.0, speedMin = -0.0;
@@ -49,6 +49,7 @@ void sbusCB(const sbus_serial::Sbus::ConstPtr& sbus){
     failsafe = sbus->failsafe;
     frame_lost = sbus->frame_lost;
     // signal inout and store
+
     if (moveable_in == 0 || failsafe == 1 || frame_lost == 1){
         vt_cmd = 0.0;
         delta_cmd = 0.0;
@@ -58,10 +59,8 @@ void sbusCB(const sbus_serial::Sbus::ConstPtr& sbus){
         else if (moveable_in == 0){
             ROS_ERROR("RC NOT enable, please toggle SWA to down!!");
         }
-        
-        
-        ROS_WARN("input speed is: %lf, %d", vt_cmd, speed_in);
-        ROS_WARN("input steer is: %lf, %d", delta_cmd, steer_in);
+        // ROS_WARN("input speed is: %lf, %d", vt_cmd, speed_in);
+        // ROS_WARN("input steer is: %lf, %d", delta_cmd, steer_in);
     }
     else{
         if (speed_in - deadband_speed <= 0)
@@ -295,8 +294,11 @@ int rxServoThread(){
     for (int i = 0;; i++)
     {
         if (stopFlag ==0){
-            if (i%10==0){
+            if (i%5==0){
                 //read first
+                
+
+                // read position
                 dxl_comm_result = packetHandler->read4ByteTxRx(portHandler, DXL_FL_ID, ADDR_PRO_PRESENT_POSITION, (uint32_t*)&servo[0].posRx, &dxl_error);
                 if (dxl_comm_result != COMM_SUCCESS)
                     {
@@ -306,7 +308,6 @@ int rxServoThread(){
                     {
                         ROS_WARN("dxl_error: %d",dxl_error);
                     }
-
                 dxl_comm_result = packetHandler->read4ByteTxRx(portHandler, DXL_FR_ID, ADDR_PRO_PRESENT_POSITION, (uint32_t*)&servo[1].posRx, &dxl_error);
                 if (dxl_comm_result != COMM_SUCCESS)
                     {
@@ -316,6 +317,35 @@ int rxServoThread(){
                     {
                         ROS_WARN("dxl_error: %d",dxl_error);
                     }
+                
+                // read current 
+                dxl_comm_result = packetHandler->read2ByteTxRx(portHandler, DXL_FL_ID, ADDR_PRO_PRESENT_CURRENT, (uint16_t*)&servo[0].curRx, &dxl_error);
+                if (dxl_comm_result != COMM_SUCCESS)
+                    {
+                        ROS_WARN("dxl_comm_result: %d",dxl_comm_result);
+                    }
+                    else if (dxl_error != 0)
+                    {
+                        ROS_WARN("dxl_error: %d",dxl_error);
+                    }
+                dxl_comm_result = packetHandler->read2ByteTxRx(portHandler, DXL_FR_ID, ADDR_PRO_PRESENT_CURRENT, (uint16_t*)&servo[1].curRx, &dxl_error);
+                if (dxl_comm_result != COMM_SUCCESS)
+                    {
+                        ROS_WARN("dxl_comm_result: %d",dxl_comm_result);
+                    }
+                    else if (dxl_error != 0)
+                    {
+                        ROS_WARN("dxl_error: %d",dxl_error);
+                    }
+                for (int i = 0; i < 2; i++)
+                {
+                    ServoInfo.polygon.points[i].x = (float)servo[i].posRx;
+                    ServoInfo.polygon.points[i].y = (float)servo[i].curRx;
+                }
+                ROS_INFO("[L]cur:%.2f, pos:%.2f.",ServoInfo.polygon.points[0].y, ServoInfo.polygon.points[0].x);
+                ROS_INFO("[R]cur:%.2f, pos:%.2f.",ServoInfo.polygon.points[1].y, ServoInfo.polygon.points[1].x);
+
+                servoInfoPub.publish(ServoInfo);
             }
 
             // write
@@ -328,10 +358,7 @@ int rxServoThread(){
                 {
                     ROS_WARN("dxl_error[%d]: %d",DXL_FL_ID,dxl_error);
                 }
-                // else
-                // {
-                //     ROS_INFO("Dynamixel#%d has been successfully sended \n", DXL_FR_ID);
-                // }
+
             dxl_comm_result = packetHandler->write4ByteTxRx(portHandler, DXL_FR_ID, ADDR_PRO_GOAL_POSITION,servo[1].posTx, &dxl_error);
             if (dxl_comm_result != COMM_SUCCESS)
                 {
@@ -341,10 +368,6 @@ int rxServoThread(){
                 {
                     ROS_WARN("dxl_error[%d]: %d",DXL_FR_ID,dxl_error);
                 }
-            // if (/* condition */)
-            // {
-            //     /* code */
-            // }
             
         }
         else{
@@ -367,10 +390,13 @@ int main(int argc, char** argv) {
 	ros::NodeHandle n("~");
 	ros::Rate loop_rate(100);
     joySub = n.subscribe<sensor_msgs::Joy>("/joy", 10, joyCB);
-    sbusSub = n.subscribe<sbus_serial::Sbus>("/sbus", 100, sbusCB);
+    sbusSub = n.subscribe<sbus_serial::Sbus>("/sbus", 10, sbusCB);
     simulinkSub = n.subscribe<geometry_msgs::Twist>("/Simulink_cmd", 10, cmdCB);
     motorInfoPub = n.advertise<geometry_msgs::PolygonStamped>("/M3508_Rx_State", 10);
+    servoInfoPub = n.advertise<geometry_msgs::PolygonStamped>("/Servo_Rx_State", 10);
     MotorInfo.polygon.points.resize(4);
+    ServoInfo.polygon.points.resize(2);
+    
     signal(SIGINT, signalCallback);
 
     // get param from ros 
@@ -394,8 +420,8 @@ int main(int argc, char** argv) {
 	}
 
     sleep(1);
-	std::thread canTx(txMotorThread, s);
-	std::thread canRx(rxMotorThread, s);
+	// std::thread canTx(txMotorThread, s);
+	// std::thread canRx(rxMotorThread, s);
     std::thread servoRx(rxServoThread);
 
 	while (ros::ok())

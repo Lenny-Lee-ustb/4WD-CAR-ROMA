@@ -3,9 +3,9 @@
 //
 // Code generated for Simulink model 'pro_upper_controller'.
 //
-// Model version                  : 1.9
+// Model version                  : 1.10
 // Simulink Coder version         : 9.7 (R2022a) 13-Nov-2021
-// C/C++ source code generated on : Tue Apr 26 17:16:33 2022
+// C/C++ source code generated on : Wed Apr 27 12:54:28 2022
 //
 
 #ifndef _ROS_MATLAB_NODEINTERFACE_
