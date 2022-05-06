@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(slam_sim_demo)
+project(slam_pack)
 find_package(catkin REQUIRED COMPONENTS
 	roscpp
 	rospy

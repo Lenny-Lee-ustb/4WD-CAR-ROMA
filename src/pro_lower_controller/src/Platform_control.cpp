@@ -77,8 +77,8 @@ void sbusCB(const sbus_serial::Sbus::ConstPtr& sbus){
             }
         }
         delta_cmd = double(steer_in) / 500 * MAX_STEER;
-        ROS_INFO("input speed is: %lf, %d", vt_cmd, speed_in);
-        ROS_INFO("input steer is: %lf, %d", delta_cmd, steer_in);
+        // ROS_INFO("input speed is: %lf, %d", vt_cmd, speed_in);
+        // ROS_INFO("input steer is: %lf, %d", delta_cmd, steer_in);
         
     }
 
@@ -342,8 +342,8 @@ int rxServoThread(){
                     ServoInfo.polygon.points[i].x = (float)servo[i].posRx;
                     ServoInfo.polygon.points[i].y = (float)servo[i].curRx;
                 }
-                ROS_INFO("[L]cur:%.2f, pos:%.2f.",ServoInfo.polygon.points[0].y, ServoInfo.polygon.points[0].x);
-                ROS_INFO("[R]cur:%.2f, pos:%.2f.",ServoInfo.polygon.points[1].y, ServoInfo.polygon.points[1].x);
+                // ROS_INFO("[L]cur:%.2f, pos:%.2f.",ServoInfo.polygon.points[0].y, ServoInfo.polygon.points[0].x);
+                // ROS_INFO("[R]cur:%.2f, pos:%.2f.",ServoInfo.polygon.points[1].y, ServoInfo.polygon.points[1].x);
 
                 servoInfoPub.publish(ServoInfo);
             }
@@ -420,8 +420,8 @@ int main(int argc, char** argv) {
 	}
 
     sleep(1);
-	// std::thread canTx(txMotorThread, s);
-	// std::thread canRx(rxMotorThread, s);
+	std::thread canTx(txMotorThread, s);
+	std::thread canRx(rxMotorThread, s);
     std::thread servoRx(rxServoThread);
 
 	while (ros::ok())

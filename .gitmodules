@@ -5,3 +5,6 @@
 [submodule "src/sbus_serial"]
 	path = src/sbus_serial
 	url = https://github.com/Lenny-Lee-ustb/sbus_serial.git
+[submodule "src/realsense-ros"]
+	path = src/realsense-ros
+	url = https://github.com/IntelRealSense/realsense-ros.git
