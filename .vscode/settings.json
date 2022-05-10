@@ -14,7 +14,14 @@
         "bitset": "cpp",
         "optional": "cpp",
         "complex": "cpp",
-        "streambuf": "cpp"
+        "streambuf": "cpp",
+        "iosfwd": "cpp",
+        "dense": "cpp",
+        "*.tcc": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "vector": "cpp",
+        "system_error": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

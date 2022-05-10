@@ -4,9 +4,11 @@
 
     <!-- 1. startup sensors -->
     <!-- RpLiadr s1 -->
-    <include file="$(find mbf_navigation)/launch/includes/rplidar.launch"/>
+    <include file="$(find mbf_navigation)/launch/includes/rplidar.launch.xml"/>
     <!-- RealSense T265 without TF -->
-    <include file="$(find mbf_navigation)/launch/includes/rs_t265_odom.launch"/>
+    <include file="$(find mbf_navigation)/launch/includes/rs_t265_odom.launch.xml"/>
+    <include file="$(find mbf_navigation)/launch/includes/srf_laser_odometry.launch.xml"/>
+
 
     <!-- 2. setup tf (amcl+ekf) -->
     <!-- Map server -->
@@ -18,7 +20,6 @@
         <rosparam command="load" file="$(find mbf_navigation)/param/ekf_params_t265.yaml" />
     </node>
 
-    <!-- <include file="(find srf_laser_odometry)/launch/srf_laser_odometry.launch"/> -->
 
     <!-- Navstack -->
     <node pkg="move_base" type="move_base" respawn="false" name="move_base">

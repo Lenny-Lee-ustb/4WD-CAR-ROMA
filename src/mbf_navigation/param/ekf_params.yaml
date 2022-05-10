@@ -78,23 +78,23 @@ odom0_differential: false
 odom0_pose_rejection_threshold: 8
 odom0_twist_rejection_threshold: 4.0
 
-#odom1: /encoder_imu_odom
+odom1: /odom_srf
+odom1_config: [true, true, true,
+               false, false, false,
+               true, true, false,
+               false, false, false,
+               false, false, false]
 # odom1_config: [true, true, true,
-#                false, false, false,
-#                true, true, false,
-#                false, false, false,
-#                false, false, false]
-#odom1_config: [true, true, true,
 #               false, false, false,
 #               false, false, false,
 #               false, false, false,
 #               false, false, false]
-#odom1_queue_size: 5
-#odom1_nodelay: true
-#odom1_differential: true
-#odom1_relative: false
-# odom0_pose_rejection_threshold: 8
-# odom0_twist_rejection_threshold: 0.75
+odom1_queue_size: 5
+odom1_nodelay: true
+odom1_differential: true
+odom1_relative: false
+odom0_pose_rejection_threshold: 8
+odom0_twist_rejection_threshold: 0.75
 
 
 imu0: /imu_data
