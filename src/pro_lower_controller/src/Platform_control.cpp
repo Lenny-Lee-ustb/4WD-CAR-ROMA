@@ -5,8 +5,8 @@
 
 #define CAR_LENGTH 0.404 //m
 #define CAR_WIDTH 0.281 //m
-#define MAX_STEER 0.6 //rad
-#define MIN_STEER -0.6 //rad
+#define MAX_STEER 0.8 //rad
+#define MIN_STEER -0.8 //rad
 #define MOTOR_RATIO 5.18 // input/output
 #define WHEEL_RADIUS 0.07 // wheel radius of 1/10 car
 #define WHEEL_OFFSET 0.03 //m
@@ -34,7 +34,7 @@ void joyCB(const sensor_msgs::Joy::ConstPtr& joy){
 }
 
 void sbusCB(const sbus_serial::Sbus::ConstPtr& sbus){
-    int speed_in, steer_in, moveable_in, direct_in = 0;
+    int speed_in, steer_in, moveable_in, direct_in, control_in = 0;
     double vt_in, delta_in = 0;
     bool failsafe, frame_lost = 0;
     int deadband_speed = 30;
@@ -46,6 +46,7 @@ void sbusCB(const sbus_serial::Sbus::ConstPtr& sbus){
     // remap steer angle to symatric[-500, 500]
     moveable_in = sbus->mappedChannels[6];
     direct_in = sbus->mappedChannels[7];
+    control_in = sbus->mappedChannels[9];
     failsafe = sbus->failsafe;
     frame_lost = sbus->frame_lost;
     // signal inout and store
@@ -76,12 +77,11 @@ void sbusCB(const sbus_serial::Sbus::ConstPtr& sbus){
                 vt_cmd = double(speed_in - deadband_speed)/double(1000 - deadband_speed) * MIN_SPPED;
             }
         }
-        delta_cmd = double(steer_in) / 500 * MAX_STEER;
+        delta_cmd = -double(steer_in) / 500 * MAX_STEER;
         // ROS_INFO("input speed is: %lf, %d", vt_cmd, speed_in);
         // ROS_INFO("input steer is: %lf, %d", delta_cmd, steer_in);
         
     }
-
 }
 
 void cmdCB(geometry_msgs::Twist cmd_vel){

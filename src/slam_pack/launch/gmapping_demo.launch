@@ -1,5 +1,5 @@
 <launch>
-  <include file="$(find slam_sim_demo)/launch/include/robot_gmapping.launch.xml"/>
+  <include file="$(find slam_pack)/launch/include/robot_gmapping.launch.xml"/>
 
   <!-- <node pkg="tf2_ros" type="static_transform_publisher" 
         name="base_static_transform_publisher" args="-0.1 0 -0.25 0  0 0 base_link laser" />    -->

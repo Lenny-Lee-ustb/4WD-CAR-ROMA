@@ -1,2 +1,0 @@
-set(sbus_serial_MESSAGE_FILES "/home/car/4WD-CAR-ROMA/src/sbus_serial/msg/Sbus.msg")
-set(sbus_serial_SERVICE_FILES "")

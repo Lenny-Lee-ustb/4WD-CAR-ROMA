@@ -1,8 +1,0 @@
-prefix=/home/car/4WD-CAR-ROMA/install
-
-Name: pro_lower_controller
-Description: Description of pro_lower_controller
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

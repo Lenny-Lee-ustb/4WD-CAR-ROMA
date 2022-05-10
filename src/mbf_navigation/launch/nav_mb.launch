@@ -2,18 +2,23 @@
 
 <launch>
 
+    <!-- 1. startup sensors -->
     <!-- RpLiadr s1 -->
-    <node name="rplidarNode" pkg="rplidar_ros" type="rplidarNode" output="screen">
-        <param name="serial_port"         type="string" value="/dev/laser"/>
-        <param name="serial_baudrate"     type="int"    value="256000"/>
-        <param name="frame_id"            type="string" value="laser"/>
-        <param name="inverted"            type="bool"   value="false"/>
-        <param name="angle_compensate"    type="bool"   value="true"/>
+    <include file="$(find mbf_navigation)/launch/includes/rplidar.launch"/>
+    <!-- RealSense T265 without TF -->
+    <include file="$(find mbf_navigation)/launch/includes/rs_t265_odom.launch"/>
+
+    <!-- 2. setup tf (amcl+ekf) -->
+    <!-- Map server -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find mbf_navigation)/maps/627.yaml"/>
+    <!-- amcl -->
+    <include file="$(find mbf_navigation)/launch/includes/amcl.launch.xml"/>
+    <!-- ekf -->
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true">
+        <rosparam command="load" file="$(find mbf_navigation)/param/ekf_params_t265.yaml" />
     </node>
 
-    <!-- Map server -->
-    <node name="map_server" pkg="map_server" type="map_server" args="$(find mbf_navigation)/maps/test.yaml"/>
-
+    <!-- <include file="(find srf_laser_odometry)/launch/srf_laser_odometry.launch"/> -->
 
     <!-- Navstack -->
     <node pkg="move_base" type="move_base" respawn="false" name="move_base">
@@ -28,4 +33,10 @@
         <!-- move_base params -->
         <rosparam file="$(find mbf_navigation)/param/move_base_params.yaml" command="load"/>        
     </node>
+
+    <!-- Rviz -->
+    <node pkg="rviz" 
+          type="rviz" 
+          name="display" 
+          args="-d $(find pro_lower_controller)/rviz/odom.rviz" required="true"/>
 </launch>

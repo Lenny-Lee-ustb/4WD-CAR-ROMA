@@ -1,27 +1,35 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <root>
- <tabbed_widget parent="main_window" name="Main Window">
-  <Tab tab_name="tab1" containers="1">
+ <tabbed_widget name="Main Window" parent="main_window">
+  <Tab containers="1" tab_name="tab1">
    <Container>
-    <DockSplitter orientation="-" count="2" sizes="0.5;0.5">
+    <DockSplitter orientation="-" count="3" sizes="0.333709;0.332582;0.333709">
      <DockArea name="...">
       <plot style="Lines" flip_y="false" flip_x="false" mode="TimeSeries">
-       <range top="6.000000" right="1649574127.900679" bottom="-1.500000" left="1649574122.901642"/>
-       <limitY max="6" min="-1.5"/>
-       <curve color="#1f77b4" name="/M3508_Rx_State/polygon/points.0/x"/>
-       <curve color="#d62728" name="/M3508_Rx_State/polygon/points.1/x"/>
-       <curve color="#1ac938" name="/M3508_Rx_State/polygon/points.2/x"/>
-       <curve color="#ff7f0e" name="/M3508_Rx_State/polygon/points.3/x"/>
+       <range top="6.000000" right="1652165605.799441" bottom="-1.500000" left="1652165600.800378"/>
+       <limitY min="-1.5" max="6"/>
+       <curve name="/M3508_Rx_State/polygon/points.0/x" color="#1f77b4"/>
+       <curve name="/M3508_Rx_State/polygon/points.1/x" color="#d62728"/>
+       <curve name="/M3508_Rx_State/polygon/points.2/x" color="#1ac938"/>
+       <curve name="/M3508_Rx_State/polygon/points.3/x" color="#ff7f0e"/>
       </plot>
      </DockArea>
      <DockArea name="...">
       <plot style="Lines" flip_y="false" flip_x="false" mode="TimeSeries">
-       <range top="1.500000" right="1649574127.900679" bottom="-1.500000" left="1649574122.901642"/>
-       <limitY max="1.5" min="-1.5"/>
-       <curve color="#f14cc1" name="/M3508_Rx_State/polygon/points.0/y"/>
-       <curve color="#9467bd" name="/M3508_Rx_State/polygon/points.1/y"/>
-       <curve color="#17becf" name="/M3508_Rx_State/polygon/points.2/y"/>
-       <curve color="#bcbd22" name="/M3508_Rx_State/polygon/points.3/y"/>
+       <range top="1.500000" right="1652165605.799441" bottom="-1.500000" left="1652165600.800378"/>
+       <limitY min="-1.5" max="1.5"/>
+       <curve name="/M3508_Rx_State/polygon/points.0/y" color="#f14cc1"/>
+       <curve name="/M3508_Rx_State/polygon/points.1/y" color="#9467bd"/>
+       <curve name="/M3508_Rx_State/polygon/points.2/y" color="#17becf"/>
+       <curve name="/M3508_Rx_State/polygon/points.3/y" color="#bcbd22"/>
+      </plot>
+     </DockArea>
+     <DockArea name="...">
+      <plot style="Lines" flip_y="false" flip_x="false" mode="TimeSeries">
+       <range top="2563.975000" right="1652165605.792356" bottom="1473.025000" left="1652165600.804846"/>
+       <limitY/>
+       <curve name="/Servo_Rx_State/polygon/points.0/x" color="#1f77b4"/>
+       <curve name="/Servo_Rx_State/polygon/points.1/x" color="#d62728"/>
       </plot>
      </DockArea>
     </DockSplitter>

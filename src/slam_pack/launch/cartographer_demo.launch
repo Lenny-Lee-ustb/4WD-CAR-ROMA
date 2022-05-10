@@ -18,7 +18,7 @@
 
 
   <node name="rviz" pkg="rviz" type="rviz" required="true"
-      args="-d $(find slam_sim_demo)/rviz/cartographer.rviz" />
+      args="-d $(find slam_pack)/rviz/cartographer.rviz" />
 
 
 
