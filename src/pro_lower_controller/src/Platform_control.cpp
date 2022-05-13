@@ -376,6 +376,8 @@ int rxServoThread(){
             portHandler->closePort();
             return 0;
         } 
+        // set time delay
+        
     }
     return 1;
 }

@@ -15,7 +15,7 @@
 #define PROTOCOL_VERSION                2.0                 // See which protocol version is used in the Dynamixel
 
 // Default setting
-#define BAUDRATE                        2000000
+#define BAUDRATE                        4000000
 #define DEVICENAME                     "/dev/servo"      // Check which port is being used on your controller
 
 #define TORQUE_ENABLE                   1                   // Value for enabling the torque

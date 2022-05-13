@@ -11,3 +11,6 @@
 [submodule "src/srf_laser_odometry"]
 	path = src/srf_laser_odometry
 	url = https://github.com/MAPIRlab/srf_laser_odometry.git
+[submodule "src/VINS-Mono-noetic"]
+	path = src/VINS-Mono-noetic
+	url = https://github.com/Lenny-Lee-ustb/VINS-Mono-noetic.git

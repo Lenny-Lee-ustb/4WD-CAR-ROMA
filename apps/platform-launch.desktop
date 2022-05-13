@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Platform-launch
+Name[zh_CN]=Platform-launch
+Comment=Platform launch(M3508 motors and servos) 
+Exec=/home/car/4WD-CAR-ROMA/car_setup.sh
+Icon=/home/car/4WD-CAR-ROMA/apps/car.png
+Terminal=true
+Type=Application
+Categories=Application;
+Encoding=UTF-8
+StartupNotify=true

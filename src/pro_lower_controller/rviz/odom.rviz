@@ -141,25 +141,15 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
-        base_link:
-          Value: true
-        camera_accel_frame:
-          Value: true
-        camera_accel_optical_frame:
-          Value: true
-        camera_gyro_frame:
-          Value: true
-        camera_gyro_optical_frame:
-          Value: true
-        camera_link:
-          Value: true
-        camera_odom_frame:
+        base_footprint:
           Value: true
         camera_pose_frame:
           Value: true
         laser:
           Value: true
         map:
+          Value: true
+        odom:
           Value: true
       Marker Alpha: 1
       Marker Scale: 3
@@ -169,18 +159,12 @@ Visualization Manager:
       Show Names: true
       Tree:
         map:
-          camera_odom_frame:
-            camera_pose_frame:
-              camera_link:
-                base_link:
-                  laser:
-                    {}
-                camera_accel_frame:
-                  camera_accel_optical_frame:
-                    {}
-                camera_gyro_frame:
-                  camera_gyro_optical_frame:
-                    {}
+          odom:
+            base_footprint:
+              camera_pose_frame:
+                {}
+              laser:
+                {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -221,6 +205,23 @@ Visualization Manager:
       Unreliable: false
       Use Timestamp: false
       Value: true
+    - Alpha: 1
+      Arrow Length: 0.30000001192092896
+      Axes Length: 0.30000001192092896
+      Axes Radius: 0.009999999776482582
+      Class: rviz/PoseArray
+      Color: 255; 25; 0
+      Enabled: true
+      Head Length: 0.07000000029802322
+      Head Radius: 0.029999999329447746
+      Name: PoseArray
+      Queue Size: 10
+      Shaft Length: 0.23000000417232513
+      Shaft Radius: 0.009999999776482582
+      Shape: Arrow (Flat)
+      Topic: /particlecloud
+      Unreliable: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -248,20 +249,26 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Angle: -1.3849996328353882
-      Class: rviz/TopDownOrtho
+      Class: rviz/Orbit
+      Distance: 11.934004783630371
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
+      Field of View: 0.7853981852531433
+      Focal Point:
+        X: -2.6374142169952393
+        Y: 0.5332834720611572
+        Z: 0.7568355798721313
+      Focal Shape Fixed Size: true
+      Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 108.43565368652344
+      Pitch: 1.5297966003417969
       Target Frame: base_link
-      X: -0.19186964631080627
-      Y: -0.05803198367357254
+      Yaw: 3.370002031326294
     Saved:
       - Angle: -1.3849996328353882
         Class: rviz/TopDownOrtho
