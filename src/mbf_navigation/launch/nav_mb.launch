@@ -6,19 +6,20 @@
     <!-- RpLiadr s1 -->
     <include file="$(find mbf_navigation)/launch/includes/rplidar.launch.xml"/>
     <!-- RealSense T265 without TF -->
-    <!-- <include file="$(find mbf_navigation)/launch/includes/rs_t265_odom.launch.xml"/> -->
+    <include file="$(find mbf_navigation)/launch/includes/rs_t265_odom.launch.xml"/>
+    <!-- srf_laser_odometry -->
     <!-- <include file="$(find mbf_navigation)/launch/includes/srf_laser_odometry.launch.xml"/> -->
 
 
     <!-- 2. setup tf (amcl+ekf) -->
     <!-- Map server -->
-    <node name="map_server" pkg="map_server" type="map_server" args="$(find mbf_navigation)/maps/627.yaml"/>
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find mbf_navigation)/maps/631.yaml"/>
     <!-- amcl -->
     <include file="$(find mbf_navigation)/launch/includes/amcl.launch.xml"/>
     <!-- ekf -->
-    <!-- <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true">
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true">
         <rosparam command="load" file="$(find mbf_navigation)/param/ekf_params_t265.yaml" />
-    </node> -->
+    </node>
 
 
     <!-- Navstack -->
