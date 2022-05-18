@@ -235,7 +235,7 @@ void txMotorThread(int s)
     
 };
 
-int rxServoThread(){
+int rxtxServoThread(){
     // Dynamixel init
     dynamixel::PortHandler *portHandler = dynamixel::PortHandler::getPortHandler(DEVICENAME);
     dynamixel::PacketHandler *packetHandler = dynamixel::PacketHandler::getPacketHandler(PROTOCOL_VERSION);
@@ -424,7 +424,7 @@ int main(int argc, char** argv) {
     sleep(1);
 	std::thread canTx(txMotorThread, s);
 	std::thread canRx(rxMotorThread, s);
-    std::thread servoRx(rxServoThread);
+    std::thread servoRx(rxtxServoThread);
 
 	while (ros::ok())
     {
