@@ -13,36 +13,30 @@
 #define MAX_SPPED 5.0 // 12.0m/s at 9000rpm
 #define MIN_SPPED -1.0 // 12.0m/s at 9000rpm
 
-
-
 ros::Publisher motorInfoPub, servoInfoPub;
-ros::Subscriber joySub, simulinkSub, sbusSub;
+ros::Subscriber simulinkSub, sbusSub;
 geometry_msgs::PolygonStamped MotorInfo, ServoInfo;
+geometry_msgs::Twist cmdUp, cmdSbus;
 sensor_msgs::Temperature MotorTemp;
+
 double temp, tempLast, tempAlpha = 0.05;
 double speedMax = 0.0, speedMin = -0.0;
 double frictionTor = 0.020;
-double a_1,b_0,b_1; 	// coefficient for low pass filter
 double vt_cmd,delta_cmd;
+
+int  moveable_in, direct_in, control_in = 0;
+bool failsafe, frame_lost = 0;
 
 Motor3508 motor[4];
 DynamixelServo servo[2];
 
-void joyCB(const sensor_msgs::Joy::ConstPtr& joy){
-    vt_cmd = joy->axes[1]*speedMax + joy->buttons[1]*1.0; 
-    delta_cmd = joy->axes[3]*MAX_STEER;
-}
-
 void sbusCB(const sbus_serial::Sbus::ConstPtr& sbus){
-    int speed_in, steer_in, moveable_in, direct_in, control_in = 0;
-    double vt_in, delta_in = 0;
-    bool failsafe, frame_lost = 0;
     int deadband_speed = 30;
     int deadband_steer = 5;
+    int speedSbusIn, steerSbusIn = 0; // from upper controller   
 
-    speed_in = sbus->mappedChannels[2];
-    steer_in = sbus->mappedChannels[3];
-    steer_in = steer_in - 500;
+    speedSbusIn = sbus->mappedChannels[2];
+    steerSbusIn = sbus->mappedChannels[3] - 500;
     // remap steer angle to symatric[-500, 500]
     moveable_in = sbus->mappedChannels[6];
     direct_in = sbus->mappedChannels[7];
@@ -51,41 +45,56 @@ void sbusCB(const sbus_serial::Sbus::ConstPtr& sbus){
     frame_lost = sbus->frame_lost;
     // signal inout and store
 
-    if (moveable_in == 0 || failsafe == 1 || frame_lost == 1){
+    if (speedSbusIn - deadband_speed <= 0)
+        {
+            cmdSbus.linear.x = 0;
+        }
+        else
+        {
+            if(direct_in<500){
+                cmdSbus.linear.x = double(speedSbusIn - deadband_speed)/double(1000 - deadband_speed) * MAX_SPPED;
+            }
+            else if(direct_in>500){
+                cmdSbus.linear.x = double(speedSbusIn - deadband_speed)/double(1000 - deadband_speed) * MIN_SPPED;
+            }
+        }
+        cmdSbus.angular.z = -double(steerSbusIn) / 500 * MAX_STEER;
+}
+
+void cmdCB(const geometry_msgs::Twist::ConstPtr &cmd_vel){
+    cmdUp = *cmd_vel;
+}
+
+void CmdMux(){
+
+    if ( (!moveable_in == !control_in) || failsafe == 1 || frame_lost == 1){
         vt_cmd = 0.0;
         delta_cmd = 0.0;
         if (failsafe == 1 || frame_lost == 1){
             ROS_ERROR("RC SIGNAL LOST!!! Check RC status!");
         }
-        else if (moveable_in == 0){
-            ROS_ERROR("RC NOT enable, please toggle SWA to down!!");
+        else{
+            // ROS_ERROR("RC NOT enable, please toggle SWA to down!!");
+            ROS_WARN("moveable_in=%d, control_in=%d", !!moveable_in, !!control_in);
         }
-        // ROS_WARN("input speed is: %lf, %d", vt_cmd, speed_in);
-        // ROS_WARN("input steer is: %lf, %d", delta_cmd, steer_in);
+        // ROS_WARN("input speed is: %lf, %d", vt_cmd, speedSbusIn);
+        // ROS_WARN("input steer is: %lf, %d", delta_cmd, steerSbusIn);
     }
     else{
-        if (speed_in - deadband_speed <= 0)
+        if (!moveable_in == false)
         {
-            vt_cmd = 0;
+            vt_cmd = cmdSbus.linear.x;
+            delta_cmd = cmdSbus.angular.z;
         }
-        else
+        if (!control_in == false)
         {
-            if(direct_in<500){
-                vt_cmd = double(speed_in - deadband_speed)/double(1000 - deadband_speed) * MAX_SPPED;
-            }
-            else if(direct_in>500){
-                vt_cmd = double(speed_in - deadband_speed)/double(1000 - deadband_speed) * MIN_SPPED;
-            }
+            vt_cmd = cmdUp.linear.x;
+            delta_cmd = cmdUp.angular.z;
         }
-        delta_cmd = -double(steer_in) / 500 * MAX_STEER;
-        // ROS_INFO("input speed is: %lf, %d", vt_cmd, speed_in);
-        // ROS_INFO("input steer is: %lf, %d", delta_cmd, steer_in);
         
+        // ROS_INFO("input speed is: %lf, %d", vt_cmd, speedSbusIn);
+        // ROS_INFO("input steer is: %lf, %d", delta_cmd, steerSbusIn);
     }
-}
-
-void cmdCB(geometry_msgs::Twist cmd_vel){
-
 }
 
 // INPUT: vt(m/s),deltaF(rad) 
@@ -203,7 +212,7 @@ void txMotorThread(int s)
     for (int i = 0;; i++) 
 	{
         int nbytes;
-        
+        CmdMux();
         vt_cmd = fmin(fmax(vt_cmd,speedMin),speedMax);
         BodytoWheel(vt_cmd,delta_cmd);
 
@@ -391,9 +400,8 @@ int main(int argc, char** argv) {
 	ros::init(argc,argv,"Pro_platform_controller");
 	ros::NodeHandle n("~");
 	ros::Rate loop_rate(100);
-    joySub = n.subscribe<sensor_msgs::Joy>("/joy", 10, joyCB);
     sbusSub = n.subscribe<sbus_serial::Sbus>("/sbus", 10, sbusCB);
-    simulinkSub = n.subscribe<geometry_msgs::Twist>("/Simulink_cmd", 10, cmdCB);
+    simulinkSub = n.subscribe<geometry_msgs::Twist>("/cmd_vel", 10, cmdCB);
     motorInfoPub = n.advertise<geometry_msgs::PolygonStamped>("/M3508_Rx_State", 10);
     servoInfoPub = n.advertise<geometry_msgs::PolygonStamped>("/Servo_Rx_State", 10);
     MotorInfo.polygon.points.resize(4);
