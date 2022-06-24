@@ -13,7 +13,7 @@
 
     <!-- 2. setup tf (amcl+ekf) -->
     <!-- Map server -->
-    <node name="map_server" pkg="map_server" type="map_server" args="$(find mbf_navigation)/maps/631.yaml"/>
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find mbf_navigation)/maps/under.yaml"/>
     <!-- amcl -->
     <include file="$(find mbf_navigation)/launch/includes/amcl.launch.xml"/>
     <!-- ekf -->

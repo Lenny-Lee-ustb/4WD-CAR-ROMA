@@ -14,3 +14,6 @@
 [submodule "src/VINS-Mono-noetic"]
 	path = src/VINS-Mono-noetic
 	url = https://github.com/Lenny-Lee-ustb/VINS-Mono-noetic.git
+[submodule "src/follow_waypoints"]
+	path = src/follow_waypoints
+	url = https://github.com/Lenny-Lee-ustb/follow_waypoints.git

@@ -52,10 +52,10 @@ void sbusCB(const sbus_serial::Sbus::ConstPtr& sbus){
         else
         {
             if(direct_in<500){
-                cmdSbus.linear.x = double(speedSbusIn - deadband_speed)/double(1000 - deadband_speed) * MAX_SPPED;
+                cmdSbus.linear.x = double(speedSbusIn - deadband_speed)/double(1000 - deadband_speed) * speedMax;
             }
             else if(direct_in>500){
-                cmdSbus.linear.x = double(speedSbusIn - deadband_speed)/double(1000 - deadband_speed) * MIN_SPPED;
+                cmdSbus.linear.x = double(speedSbusIn - deadband_speed)/double(1000 - deadband_speed) * speedMin;
             }
         }
         cmdSbus.angular.z = -double(steerSbusIn) / 500 * MAX_STEER;
