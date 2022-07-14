@@ -97,10 +97,13 @@
     <axis
       xyz="0 0 -1" />
     <limit
-      lower="0"
-      upper="0.5"
-      effort="0"
-      velocity="0" />
+      lower="-0.03"
+      upper="0.03"
+      effort="1"
+      velocity="1" />
+    <dynamics 
+      damping= "0.1"
+      friction = "0.0" />
   </joint>
   <link
     name="LF_steer_link">
@@ -155,10 +158,10 @@
     <axis
       xyz="0 0 -1" />
     <limit
-      lower="0"
-      upper="0"
-      effort="0"
-      velocity="0" />
+      lower="-0.68"
+      upper="0.68"
+      effort="3.0"
+      velocity="5.0" />
   </joint>
   <link
     name="LF_drive_link">
@@ -215,8 +218,8 @@
     <limit
       lower="0"
       upper="0"
-      effort="0"
-      velocity="0" />
+      effort="1.6"
+      velocity="1000" />
   </joint>
   <link
     name="RF_susp_link">
@@ -271,10 +274,13 @@
     <axis
       xyz="0 0 -1" />
     <limit
-      lower="0"
-      upper="0.5"
-      effort="0"
-      velocity="0" />
+      lower="-0.03"
+      upper="0.03"
+      effort="1"
+      velocity="1" />
+    <dynamics 
+      damping= "0.1"
+      friction = "0.0" />
   </joint>
   <link
     name="RF_steer_link">
@@ -329,10 +335,10 @@
     <axis
       xyz="0 0 -0.999999999999999" />
     <limit
-      lower="0"
-      upper="0"
-      effort="0"
-      velocity="0" />
+      lower="-0.68"
+      upper="0.68"
+      effort="3.0"
+      velocity="5.0" />
   </joint>
   <link
     name="RF_drive_link">
@@ -389,8 +395,8 @@
     <limit
       lower="0"
       upper="0"
-      effort="0"
-      velocity="0" />
+      effort="1.6"
+      velocity="1000" />
   </joint>
   <link
     name="LB_susp_link">
@@ -445,10 +451,13 @@
     <axis
       xyz="0 0 -1" />
     <limit
-      lower="0"
-      upper="0.5"
-      effort="0"
-      velocity="0" />
+      lower="-0.03"
+      upper="0.03"
+      effort="1"
+      velocity="1" />
+    <dynamics 
+      damping= "0.1"
+      friction = "0.0" />
   </joint>
   <link
     name="LB_drive_link">
@@ -505,8 +514,8 @@
     <limit
       lower="0"
       upper="0"
-      effort="0"
-      velocity="0" />
+      effort="1.6"
+      velocity="1000" />
   </joint>
   <link
     name="RB_susp_link">
@@ -561,10 +570,13 @@
     <axis
       xyz="0 0 -1" />
     <limit
-      lower="0"
-      upper="0.5"
-      effort="0"
-      velocity="0" />
+      lower="-0.03"
+      upper="0.03"
+      effort="1"
+      velocity="1" />
+    <dynamics 
+      damping= "0.1"
+      friction = "0.0" />
   </joint>
   <link
     name="RB_drive_link">
@@ -621,7 +633,7 @@
     <limit
       lower="0"
       upper="0"
-      effort="0"
-      velocity="0" />
+      effort="1.6"
+      velocity="1000" />
   </joint>
 </robot>
