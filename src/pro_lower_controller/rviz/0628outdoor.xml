@@ -1,0 +1,249 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<root>
+ <tabbed_widget name="Main Window" parent="main_window">
+  <Tab containers="1" tab_name="tab3">
+   <Container>
+    <DockSplitter count="2" sizes="0.500564;0.499436" orientation="-">
+     <DockArea name="...">
+      <plot style="Lines" flip_x="false" flip_y="false" mode="XYPlot">
+       <range top="0.146552" left="-5.281501" bottom="-4.917846" right="16.829631"/>
+       <limitY/>
+       <curve name="/GPS_odom/pose/pose/position/[x;y]" color="#f14cc1" curve_y="/GPS_odom/pose/pose/position/y" curve_x="/GPS_odom/pose/pose/position/x"/>
+      </plot>
+     </DockArea>
+     <DockArea name="...">
+      <plot style="Lines" flip_x="false" flip_y="false" mode="TimeSeries">
+       <range top="1.191605" left="0.000000" bottom="-0.029064" right="68.905817"/>
+       <limitY/>
+       <curve name="average velocity" color="#d62728"/>
+      </plot>
+     </DockArea>
+    </DockSplitter>
+   </Container>
+  </Tab>
+  <Tab containers="1" tab_name="tab1">
+   <Container>
+    <DockSplitter count="3" sizes="0.332957;0.334086;0.332957" orientation="-">
+     <DockArea name="...">
+      <plot style="Lines" flip_x="false" flip_y="false" mode="TimeSeries">
+       <range top="1.900778" left="0.004373" bottom="0.471618" right="68.916186"/>
+       <limitY/>
+       <curve name="/Tmotor_Info/polygon/points.0/x" color="#1f77b4"/>
+       <curve name="/Tmotor_Info/polygon/points.1/x" color="#d62728"/>
+       <curve name="/Tmotor_Info/polygon/points.2/x" color="#1ac938"/>
+       <curve name="/Tmotor_Info/polygon/points.3/x" color="#ff7f0e"/>
+      </plot>
+     </DockArea>
+     <DockArea name="...">
+      <plot style="Lines" flip_x="false" flip_y="false" mode="TimeSeries">
+       <range top="43.565907" left="0.004373" bottom="-36.253579" right="68.916186"/>
+       <limitY/>
+       <curve name="/Tmotor_Info/polygon/points.0/y" color="#f14cc1"/>
+       <curve name="/Tmotor_Info/polygon/points.1/y" color="#9467bd"/>
+       <curve name="/Tmotor_Info/polygon/points.2/y" color="#17becf"/>
+       <curve name="/Tmotor_Info/polygon/points.3/y" color="#bcbd22"/>
+      </plot>
+     </DockArea>
+     <DockArea name="...">
+      <plot style="Lines" flip_x="false" flip_y="false" mode="TimeSeries">
+       <range top="3.284689" left="0.004373" bottom="-3.103003" right="68.916186"/>
+       <limitY/>
+       <curve name="/Tmotor_Info/polygon/points.0/z" color="#1f77b4"/>
+       <curve name="/Tmotor_Info/polygon/points.1/z" color="#d62728"/>
+       <curve name="/Tmotor_Info/polygon/points.2/z" color="#1ac938"/>
+       <curve name="/Tmotor_Info/polygon/points.3/z" color="#ff7f0e"/>
+      </plot>
+     </DockArea>
+    </DockSplitter>
+   </Container>
+  </Tab>
+  <Tab containers="1" tab_name="tab2">
+   <Container>
+    <DockSplitter count="2" sizes="0.500564;0.499436" orientation="-">
+     <DockSplitter count="2" sizes="0.500639;0.499361" orientation="|">
+      <DockArea name="...">
+       <plot style="Lines" flip_x="false" flip_y="false" mode="TimeSeries">
+        <range top="117.583511" left="0.005014" bottom="-17.250870" right="68.916163"/>
+        <limitY/>
+        <curve name="/imu_rpy1/polygon/points.0/x" color="#f14cc1"/>
+        <curve name="/imu_rpy1/polygon/points.0/y" color="#9467bd"/>
+       </plot>
+      </DockArea>
+      <DockArea name="...">
+       <plot style="Lines" flip_x="false" flip_y="false" mode="TimeSeries">
+        <range top="91.682434" left="0.001968" bottom="-103.462219" right="68.916119"/>
+        <limitY/>
+        <curve name="/imu_data_leg_1/angular_velocity/x" color="#17becf"/>
+        <curve name="/imu_data_leg_1/angular_velocity/y" color="#bcbd22"/>
+        <curve name="/imu_data_leg_1/angular_velocity/z" color="#1f77b4"/>
+       </plot>
+      </DockArea>
+     </DockSplitter>
+     <DockSplitter count="2" sizes="0.502558;0.497442" orientation="|">
+      <DockArea name="...">
+       <plot style="Lines" flip_x="false" flip_y="false" mode="TimeSeries">
+        <range top="15.178299" left="0.004045" bottom="-17.150345" right="68.916209"/>
+        <limitY/>
+        <curve name="/imu_rpy0/polygon/points.0/x" color="#f14cc1">
+         <transform name="Outlier Removal" alias="/imu_rpy0/polygon/points.0/x[Moving Average]">
+          <options value="100"/>
+         </transform>
+        </curve>
+        <curve name="/imu_rpy0/polygon/points.0/y" color="#9467bd">
+         <transform name="Outlier Removal" alias="/imu_rpy0/polygon/points.0/y[Outlier Removal]">
+          <options value="100"/>
+         </transform>
+        </curve>
+       </plot>
+      </DockArea>
+      <DockArea name="...">
+       <plot style="Lines" flip_x="false" flip_y="false" mode="TimeSeries">
+        <range top="128.781128" left="0.002103" bottom="-130.001831" right="68.916096"/>
+        <limitY/>
+        <curve name="/imu_data_leg_0/angular_velocity/x" color="#17becf"/>
+        <curve name="/imu_data_leg_0/angular_velocity/y" color="#bcbd22"/>
+        <curve name="/imu_data_leg_0/angular_velocity/z" color="#1f77b4"/>
+       </plot>
+      </DockArea>
+     </DockSplitter>
+    </DockSplitter>
+   </Container>
+  </Tab>
+  <Tab containers="1" tab_name="tab6">
+   <Container>
+    <DockSplitter count="1" sizes="1" orientation="-">
+     <DockSplitter count="2" sizes="0.5;0.5" orientation="|">
+      <DockArea name="...">
+       <plot style="Lines" flip_x="false" flip_y="false" mode="TimeSeries">
+        <range top="102.357961" left="0.001968" bottom="-12.143411" right="68.916119"/>
+        <limitY/>
+        <curve name="/imu_data_leg_1/linear_acceleration/x" color="#d62728">
+         <transform name="Scale/Offset" alias="/imu_data_leg_1/linear_acceleration/x[Scale/Offset]">
+          <options value_offset="0" time_offset="0" value_scale="9.8"/>
+         </transform>
+        </curve>
+        <curve name="/imu_data_leg_1/linear_acceleration/y" color="#1ac938">
+         <transform name="Scale/Offset" alias="/imu_data_leg_1/linear_acceleration/y[Absolute]">
+          <options value_offset="0" time_offset="0" value_scale="9.8"/>
+         </transform>
+        </curve>
+        <curve name="/imu_data_leg_1/linear_acceleration/z" color="#ff7f0e">
+         <transform name="Scale/Offset" alias="/imu_data_leg_1/linear_acceleration/z[Scale/Offset]">
+          <options value_offset="0" time_offset="0" value_scale="9.8"/>
+         </transform>
+        </curve>
+       </plot>
+      </DockArea>
+      <DockArea name="...">
+       <plot style="Lines" flip_x="false" flip_y="false" mode="TimeSeries">
+        <range top="120.924248" left="0.002103" bottom="-14.272686" right="68.916096"/>
+        <limitY/>
+        <curve name="/imu_data_leg_0/linear_acceleration/x" color="#d62728">
+         <transform name="Scale/Offset" alias="/imu_data_leg_0/linear_acceleration/x[Scale/Offset]">
+          <options value_offset="0" time_offset="0" value_scale="9.8"/>
+         </transform>
+        </curve>
+        <curve name="/imu_data_leg_0/linear_acceleration/y" color="#1ac938">
+         <transform name="Scale/Offset" alias="/imu_data_leg_0/linear_acceleration/y[Scale/Offset]">
+          <options value_offset="0" time_offset="0" value_scale="9.8"/>
+         </transform>
+        </curve>
+        <curve name="/imu_data_leg_0/linear_acceleration/z" color="#ff7f0e">
+         <transform name="Scale/Offset" alias="/imu_data_leg_0/linear_acceleration/z[Scale/Offset]">
+          <options value_offset="0" time_offset="0" value_scale="9.8"/>
+         </transform>
+        </curve>
+       </plot>
+      </DockArea>
+     </DockSplitter>
+    </DockSplitter>
+   </Container>
+  </Tab>
+  <Tab containers="1" tab_name="tab4">
+   <Container>
+    <DockSplitter count="1" sizes="1" orientation="-">
+     <DockSplitter count="2" sizes="0.5;0.5" orientation="|">
+      <DockArea name="...">
+       <plot style="Lines" flip_x="false" flip_y="false" mode="TimeSeries">
+        <range top="7.599609" left="0.008185" bottom="-10.119141" right="68.913938"/>
+        <limitY/>
+        <curve name="/Roll_high/polygon/points.0/x" color="#17becf"/>
+        <curve name="/Roll_high/polygon/points.1/x" color="#d62728"/>
+       </plot>
+      </DockArea>
+      <DockArea name="...">
+       <plot style="Lines" flip_x="false" flip_y="false" mode="TimeSeries">
+        <range top="6.875244" left="0.008186" bottom="-13.642822" right="68.916267"/>
+        <limitY/>
+        <curve name="/Roll_low/polygon/points.0/x" color="#1ac938"/>
+        <curve name="/Roll_low/polygon/points.1/x" color="#ff7f0e"/>
+       </plot>
+      </DockArea>
+     </DockSplitter>
+    </DockSplitter>
+   </Container>
+  </Tab>
+  <currentTabIndex index="0"/>
+ </tabbed_widget>
+ <use_relative_time_offset enabled="1"/>
+ <!-- - - - - - - - - - - - - - - -->
+ <!-- - - - - - - - - - - - - - - -->
+ <Plugins>
+  <plugin ID="DataLoad CSV">
+   <default delimiter="0" time_axis=""/>
+  </plugin>
+  <plugin ID="DataLoad ROS bags">
+   <use_header_stamp value="false"/>
+   <discard_large_arrays value="true"/>
+   <max_array_size value="100"/>
+   <boolean_strings_to_number value="true"/>
+   <remove_suffix_from_strings value="true"/>
+  </plugin>
+  <plugin ID="DataLoad ULog"/>
+  <plugin ID="ROS Topic Subscriber">
+   <use_header_stamp value="false"/>
+   <discard_large_arrays value="true"/>
+   <max_array_size value="100"/>
+   <boolean_strings_to_number value="true"/>
+   <remove_suffix_from_strings value="true"/>
+  </plugin>
+  <plugin ID="UDP Server"/>
+  <plugin ID="WebSocket Server"/>
+  <plugin ID="Fast Fourier Transform"/>
+  <plugin ID="Quaternion to RPY"/>
+  <plugin ID="Reactive Script Editor">
+   <library code="--[[ Helper function to create a ScatterXY series from arrays.&#xa;&#xa; series_name: name of the created ScatterXY series&#xa; prefix:      prefix of the timeseries, before the index of the array&#xa; suffix_X:   suffix to complete the name of the series containing the X value.&#xa;             if [nil], the index of the array will be used.&#xa; suffix_Y:   suffix to complete the name of the series containing the Y value&#xa; timestamp:   usually the tracker_time variable&#xa;              &#xa; Example:&#xa; &#xa; Assuming we have multiple series in the form:&#xa; &#xa;   /trajectory/node.{N}/position/x&#xa;   /trajectory/node.{N}/position/y&#xa;   &#xa; where {N} is the index of the array (integer). We can create a reactive series from the array with:&#xa; &#xa;   CreateSeriesFromArray( &quot;my_trajectory&quot;, &quot;/trajectory/node&quot;,  &quot;position/x&quot;, &quot;position/y&quot;, tracker_time );&#xa;]]--&#xa;&#xa;function CreateSeriesFromArray( series_name, prefix, suffix_X, suffix_Y, timestamp )&#xa;  --- create a new series or overwite the previous one&#xa;  new_series = MutableScatterXY.new(series_name)&#xa;  &#xa;  --- Append points to new_series&#xa;  index = 0&#xa;  while(true) do&#xa;&#xa;    x = index;&#xa;    -- if not nil, get the X coordinate from a series&#xa;    if suffix_X ~= nil then &#xa;      series_x = TimeseriesView.find( string.format( &quot;%s.%d/%s&quot;, prefix, index, suffix_X) )&#xa;      if series_x == nil then break end&#xa;      x = series_x:atTime(timestamp)&#x9; &#xa;    end&#xa;    &#xa;    series_y = TimeseriesView.find( string.format( &quot;%s.%d/%s&quot;, prefix, index, suffix_Y) )&#xa;    if series_x == nil then break end &#xa;    y = series_y:atTime(timestamp)&#xa;    &#xa;    new_series:push_back(x,y)&#xa;    index = index+1&#xa;  end&#xa;end&#xa;"/>
+   <scripts/>
+  </plugin>
+  <plugin ID="CSV Exporter"/>
+  <plugin ID="ROS /rosout Visualization"/>
+  <plugin ID="ROS Topic Re-Publisher"/>
+ </Plugins>
+ <!-- - - - - - - - - - - - - - - -->
+ <previouslyLoaded_Datafiles>
+  <fileInfo filename="../../../../下载/asoc-data/[useful]no5_basegrass_Damp_15_20_10_15_7_no1_2022-06-22-22-01-13.bag" prefix="">
+   <selected_datasources value="/GPS_odom;/I_high;/I_low;/MultiAngleSum;/Roll_high;/Roll_low;/Tmotor_Info;/cmd_vel;/imu_data_leg_0;/imu_data_leg_1;/imu_rpy0;/imu_rpy1;/leg_angle_high;/leg_angle_low;/suspension_cmd;/velocity_high;/velocity_low"/>
+   <plugin ID="DataLoad ROS bags">
+    <use_header_stamp value="false"/>
+    <discard_large_arrays value="true"/>
+    <max_array_size value="100"/>
+    <boolean_strings_to_number value="true"/>
+    <remove_suffix_from_strings value="true"/>
+   </plugin>
+  </fileInfo>
+ </previouslyLoaded_Datafiles>
+ <!-- - - - - - - - - - - - - - - -->
+ <customMathEquations>
+  <snippet name="average velocity">
+   <global></global>
+   <function>return (value*value+v1*v1)^0.5</function>
+   <linked_source>/GPS_odom/twist/twist/linear/x</linked_source>
+   <additional_sources>
+    <v1>/GPS_odom/twist/twist/linear/y</v1>
+   </additional_sources>
+  </snippet>
+ </customMathEquations>
+ <snippets/>
+ <!-- - - - - - - - - - - - - - - -->
+</root>
+
