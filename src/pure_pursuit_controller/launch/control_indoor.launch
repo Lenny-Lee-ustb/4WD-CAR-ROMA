@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<launch>
+    <node pkg="path_load" type="path_load.py" name="path_loader" >
+        <param name="file_path" value="$(find path_load)/src/straight_20m.csv" />
+        <param name="pub_hz" value="3" />
+    </node>
+    
+    <!-- broadcast map->odom tf -->
+    <node pkg="tf2_ros" type="static_transform_publisher" 
+        name="odom_static_transform_publisher" args="0 0 0 1.5708 0 0 map odom " />
+    
+    <include file="$(find pure_pursuit_controller)/launch/includes/rs_t265_odom.launch.xml"/>
+
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true">
+        <rosparam command="load" file="$(find mbf_navigation)/param/ekf_params_t265.yaml" />
+    </node>
+
+    <!-- spawn Upper controller  !! -->
+    <node pkg="pure_pursuit_controller" type="upper_controller_angle" name="upper_controller_angle" clear_params="true" output="screen">
+        <param name = "controller_freq" type="double" value = "40.0"/>
+        <param name = "goalRadius" type="double" value = "0.5"/>
+        <param name = "goal_pose_err" type="double" value = "1.0"/>
+
+        <param name = "baseSpeed" type="double" value = "1.0"/>
+        <param name = "rot_angle" type="double" value = "0.0"/>
+
+        <param name = "P_Long" type="double" value = "20.0"/>
+        <param name = "I_Long" type="double" value = "0.0"/>
+        <param name = "D_Long" type="double" value = "2.0"/>
+
+        <param name = "P_Yaw" type="double" value = "27.0"/>
+        <param name = "I_Yaw" type="double" value = "0.0"/>
+        <param name = "D_Yaw" type="double" value = "25.0"/>
+    </node>
+</launch>
+

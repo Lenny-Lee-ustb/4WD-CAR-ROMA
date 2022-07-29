@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+    <node pkg="path_load" type="path_load.py" name="path_loader" >
+        <param name="file_path" value="$(find path_load)/src/data_square.csv" />
+        <param name="pub_hz" value="3" />
+    </node>
+</launch>

@@ -1,0 +1,4 @@
+P_Lateral= 15   I_Lateral=1    D_Lateral= 20  P_long= 9.5   I_long= 0  D_long=2
+//effect: good
+P_Lateral= 10   I_Lateral=1    D_Lateral= 20  P_long= 9.5   I_long= 0  D_long=2
+//efect: pretty good
