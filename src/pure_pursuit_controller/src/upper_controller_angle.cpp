@@ -103,7 +103,8 @@ void UpperController::controlLoopCB(const ros::TimerEvent &) {
     if (foundForwardPt) {
         if (!goal_reached) {
           // PID control
-          w = atan2(2*0.35*sin(d_theta),forward_dist);
+          // w = atan2(2*0.35*sin(d_theta),forward_dist);
+          w = d_theta + atan2(lateral_dist, carVel.linear.x); 
           vt = baseSpeed;
           
           last_speed = baseSpeed - carVel.linear.x;
