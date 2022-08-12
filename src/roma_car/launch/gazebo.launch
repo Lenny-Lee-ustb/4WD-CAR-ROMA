@@ -1,20 +1,60 @@
 <launch>
+    <!-- 加载控制器参数 -->
+  <!-- <param name='/ackermann_car/LF_drive_joint_controller/joint' value='LF_drive_joint' />
+  <param name='/ackermann_car/LB_drive_joint_controller/joint' value='LB_drive_joint' />
+  <param name='/ackermann_car/RF_drive_joint_controller/joint' value='RF_drive_joint' />
+  <param name='/ackermann_car/RB_drive_joint_controller/joint' value='RB_drive_joint' /> -->
+
+  <rosparam file="$(find ackermann_car_control)/config/ackermann_car_control.yaml" command="load" />
+
+  <param
+    name="robot_description"
+    command="$(find xacro)/xacro $(find roma_car)/urdf/roma_car.urdf.xacro" />
   <include
     file="$(find gazebo_ros)/launch/empty_world.launch" />
-  <node
+
+  <!-- <node
+    name="fake_joint_calibration"
+    pkg="rostopic"
+    type="rostopic"
+    args="pub /calibrated std_msgs/Bool true" /> -->
+  <!-- <node
     name="tf_footprint_base"
     pkg="tf"
     type="static_transform_publisher"
-    args="0 0 0 0 0 0 base_link base_footprint 40" />
+    args="0 0 0 0 0 0 base_link base_footprint 40" /> -->
+
+  <!-- spawn_model -->
   <node
     name="spawn_model"
     pkg="gazebo_ros"
     type="spawn_model"
-    args="-file $(find roma_car)/urdf/roma_car.urdf -urdf -model roma_car"
+    args="-urdf -model mycar -param robot_description"
     output="screen" />
+
+
+  <!-- robot_state_publisher -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+	respawn="false" output="screen"/>
+
   <node
-    name="fake_joint_calibration"
-    pkg="rostopic"
-    type="rostopic"
-    args="pub /calibrated std_msgs/Bool true" />
+    name="joint_state_publisher_gui"
+    pkg="joint_state_publisher_gui"
+    type="joint_state_publisher_gui" />
+
+  <!-- <node
+   pkg="joint_state_publisher"
+   type="joint_state_publisher"
+   name="joint_state_publisher" /> -->
+
+  <!-- controller_manager -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" ns="/ackermann_car" 
+    args="LF_drive_joint_controller RF_drive_joint_controller 
+    LB_drive_joint_controller RB_drive_joint_controller"
+  />
+    <!-- LF_susp_joint_controller RF_susp_joint_controller
+    LB_susp_joint_controller RB_susp_joint_controller
+    LF_steer_joint_controller RF_steer_joint_controller -->
+    
 </launch>

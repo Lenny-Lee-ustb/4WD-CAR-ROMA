@@ -1,0 +1,827 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+
+
+     <!-- 碰撞体积长52cm 宽20cm 高8cm 车轮半径6.7cm 厚度7cm  换向器长5cm 宽6cm 高5cm -->
+<robot
+  name="roma_car" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- 添加虚拟根链接 base_footprint-->
+  <link 
+    name="base_footprint">
+    <visual>
+      <geometry>
+        <sphere radius="0.001" />
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- xyz="-0.00717983951773655 1.82731480210871E-05 0.031757141842569" -->
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="1.72904566991779" />
+      <inertia
+        ixx="0.00426877505385634"
+        ixy="2.33058322927446E-05"
+        ixz="1.88523933580718E-05"
+        iyy="0.00706644277689109"
+        iyz="4.59184860877107E-06"
+        izz="0.00992013007901617" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://roma_car/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <!-- <box size="0.52 0.2 0.08" /> -->
+        <mesh
+          filename="package://roma_car/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <!-- 添加base_link到base_footprint之间的fixed关节 -->
+  <joint
+    name="baselink2footprint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+        
+        
+  <!-- xyz="0.00207166156705108 -0.00293424254545202 -1.2504503109842E-06" -->
+  <!-- LF_steer_link-->
+  <link
+    name="LF_steer_link">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.0678865224651951" />
+      <inertia
+        ixx="3.04921474473283E-05"
+        ixy="1.92137892493573E-06"
+        ixz="-2.66341595719942E-09"
+        iyy="3.6288677709521E-05"
+        iyz="-3.45448735906458E-09"
+        izz="2.73221018835434E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://roma_car/meshes/LF_steer_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://roma_car/meshes/LF_steer_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <!-- LFSteer joint -->
+  <joint
+    name="LF_steer_joint"
+    type="revolute">
+    <origin
+      xyz="0.202 0.14049 0.0274"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="LF_steer_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-0.68"
+      upper="0.68"
+      effort="3.0"
+      velocity="5.0" />
+  </joint>
+  <!-- LF_steer_joint_trans -->
+  <!-- <transmission name="LF_steer_joint_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="LF_steer_joint">
+       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="LF_steer_joint_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </actuator>
+  </transmission> -->
+
+  <!-- xyz="0.00207166156705108 -0.00293424254545202 -1.25045031098767E-06" -->
+  <!-- LFsus link -->
+  <link
+    name="LF_susp_link">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.0678865224651951" />
+      <inertia
+        ixx="3.04921474473283E-05"
+        ixy="1.92137892493573E-06"
+        ixz="-2.66341595719842E-09"
+        iyy="3.6288677709521E-05"
+        iyz="-3.45448735906514E-09"
+        izz="2.73221018835434E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://roma_car/meshes/LF_susp_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://roma_car/meshes/LF_susp_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <!-- LFsus joint -->
+  <joint
+    name="LF_susp_joint"
+    type="prismatic">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="LF_steer_link" />
+    <child
+      link="LF_susp_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-0.03"
+      upper="0.03"
+      effort="1"
+      velocity="1" />
+    <dynamics 
+      damping= "0.1"
+      friction = "0.0" />
+  </joint>
+  <!-- LF_susp_joint_trans -->
+  <!-- <transmission name="LF_susp_joint_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="LF_susp_joint">
+       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="LF_susp_joint_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </actuator>
+  </transmission> -->
+
+
+  <!-- xyz="3.30620242017243E-08 -0.0336073824875323 1.55544594534346E-07" -->
+  <!-- LFdrivelink -->
+  <link
+    name="LF_drive_link">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.507113050935727" />
+      <inertia
+        ixx="0.00111884294010658"
+        ixy="6.40656197255056E-11"
+        ixz="-4.50411004489087E-14"
+        iyy="0.00183459882798548"
+        iyz="3.01405042947201E-10"
+        izz="0.00111884294014766" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://roma_car/meshes/LF_drive_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <!-- <cylinder radius="0.067" length="0.07" /> -->
+        <mesh
+          filename="package://roma_car/meshes/LF_drive_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <!-- LFdrive joint -->
+  <joint
+    name="LF_drive_joint"
+    type="continuous">
+    <origin
+      xyz="0 0.0645 0"
+      rpy="0 0 0" />
+    <parent
+      link="LF_susp_link" />
+    <child
+      link="LF_drive_link" />
+    <axis
+      xyz="0 -1 0" />
+  </joint>
+
+
+  <!-- xyz="0.0020716576937303 0.00293424524332131 1.25427536733919E-06" -->
+  <!-- RFSteer link -->
+  <link
+    name="RF_steer_link">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.0678865123621938" />
+      <inertia
+        ixx="3.0492145277787E-05"
+        ixy="-1.92138446027928E-06"
+        ixz="2.66322668060083E-09"
+        iyy="3.62886633228721E-05"
+        iyz="-3.4548351112828E-09"
+        izz="2.73220927297138E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://roma_car/meshes/RF_steer_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://roma_car/meshes/RF_steer_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <!-- RFSteer joint -->
+  <joint
+    name="RF_steer_joint"
+    type="revolute">
+    <origin
+      xyz="0.202 -0.1401 0.024747"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="RF_steer_link" />
+    <axis
+      xyz="0 0 -0.999999999999999" />
+    <limit
+      lower="-0.68"
+      upper="0.68"
+      effort="3.0"
+      velocity="5.0" />
+  </joint>
+  <!-- RF_steer_joint_trans -->
+  <!-- <transmission name="RF_steer_joint_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="RF_steer_joint">
+       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="RF_steer_joint_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </actuator>
+  </transmission> -->
+
+
+
+
+  <!-- xyz="0.00207165769373031 0.00293424524332137 1.25427536733919E-06" -->
+  <!-- RFsusp link -->
+  <link
+    name="RF_susp_link">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.0678865123621938" />
+      <inertia
+        ixx="3.0492145277787E-05"
+        ixy="-1.92138446027928E-06"
+        ixz="2.66322668060124E-09"
+        iyy="3.62886633228721E-05"
+        iyz="-3.45483511128314E-09"
+        izz="2.73220927297138E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://roma_car/meshes/RF_susp_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://roma_car/meshes/RF_susp_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <!-- RFsus joint -->
+  <joint
+    name="RF_susp_joint"
+    type="prismatic">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="RF_steer_link" />
+    <child
+      link="RF_susp_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-0.03"
+      upper="0.03"
+      effort="1"
+      velocity="1" />
+    <dynamics 
+      damping= "0.1"
+      friction = "0.0" />
+  </joint>
+  <!-- RF_susp_joint_trans -->
+  <!-- <transmission name="RF_susp_joint_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="RF_susp_joint">
+       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="RF_susp_joint_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </actuator>
+  </transmission> -->
+
+
+
+  <!-- xyz="3.30620242156021E-08 0.0336073824875322 -1.55544594516999E-07" -->
+  <!-- RFdrive link -->
+   <link
+    name="RF_drive_link">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.507113050935727" />
+      <inertia
+        ixx="0.00111884294010658"
+        ixy="-6.40656198339258E-11"
+        ixz="4.50408198797879E-14"
+        iyy="0.00183459882798547"
+        iyz="3.01405043106566E-10"
+        izz="0.00111884294014766" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://roma_car/meshes/RF_drive_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <!-- <cylinder radius="0.067" length="0.07" /> -->
+        <mesh
+          filename="package://roma_car/meshes/RF_drive_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <!-- RFdrive joint -->
+  <joint
+    name="RF_drive_joint"
+    type="continuous">
+    <origin
+      xyz="0 -0.0645 0"
+      rpy="0 0 0" />
+    <parent
+      link="RF_susp_link" />
+    <child
+      link="RF_drive_link" />
+    <axis
+      xyz="0 0.999999999999971 0" />
+  </joint>
+
+
+
+
+  <!-- xyz="-0.0020716605562279 -0.00293425884253445 1.25481721927057E-06" -->
+  <!-- LBsus link -->
+  <link
+    name="LB_susp_link">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.0678865592182801" />
+      <inertia
+        ixx="3.04921510749327E-05"
+        ixy="-1.9213806579218E-06"
+        ixz="-2.66095305689508E-09"
+        iyy="3.62886859937246E-05"
+        iyz="3.45531634353211E-09"
+        izz="2.73221072587474E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://roma_car/meshes/LB_susp_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://roma_car/meshes/LB_susp_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <!-- LBsus joint -->
+  <joint
+    name="LB_susp_joint"
+    type="prismatic">
+    <origin
+      xyz="-0.202 0.14069 0.029059"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="LB_susp_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-0.03"
+      upper="0.03"
+      effort="1"
+      velocity="1" />
+    <dynamics 
+      damping= "0.1"
+      friction = "0.0" />
+  </joint>
+    <!-- LB_susp_joint_trans -->
+  <!-- <transmission name="LB_susp_joint_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="LB_susp_joint">
+       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="LB_susp_joint_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </actuator>
+  </transmission> -->
+
+
+
+
+  <!-- xyz="-3.30620247013247E-08 -0.0336073824875323 -1.55544594784146E-07" -->
+  <!-- LBdrive link -->
+  <link
+    name="LB_drive_link">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.507113050935728" />
+      <inertia
+        ixx="0.00111884294010658"
+        ixy="-6.40656198032815E-11"
+        ixz="-4.50413046944349E-14"
+        iyy="0.00183459882798548"
+        iyz="-3.01405043212294E-10"
+        izz="0.00111884294014766" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://roma_car/meshes/LB_drive_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <!-- <cylinder radius="0.067" length="0.07" /> -->
+        <mesh
+          filename="package://roma_car/meshes/LB_drive_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <!-- LBdrive joint -->
+  <joint
+    name="LB_drive_joint"
+    type="continuous">
+    <origin
+      xyz="0 0.0645 0"
+      rpy="0 0 0" />
+    <parent
+      link="LB_susp_link" />
+    <child
+      link="LB_drive_link" />
+    <axis
+      xyz="0 -1 0" />
+  </joint>
+
+
+  <!-- xyz="-0.0020716605562279 0.00293425884253443 -1.25481721927057E-06" -->
+  <!-- RBsus link -->
+  <link
+    name="RB_susp_link">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.0678865592182801" />
+      <inertia
+        ixx="3.04921510749327E-05"
+        ixy="1.9213806579218E-06"
+        ixz="2.66095305689854E-09"
+        iyy="3.62886859937246E-05"
+        iyz="3.45531634354458E-09"
+        izz="2.73221072587474E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://roma_car/meshes/RB_susp_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://roma_car/meshes/RB_susp_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <!-- RBsus joint -->
+  <joint
+    name="RB_susp_joint"
+    type="prismatic">
+    <origin
+      xyz="-0.202000000000001 -0.140437398863823 0.0270007216203276"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="RB_susp_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-0.03"
+      upper="0.03"
+      effort="1"
+      velocity="1" />
+    <dynamics 
+      damping= "0.1"
+      friction = "0.0" />
+  </joint>
+
+  <!-- RB_susp_joint_trans -->
+  <!-- <transmission name="RB_susp_joint_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="RB_susp_joint">
+       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="RB_susp_joint_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </actuator>
+  </transmission> -->
+
+
+
+  <!-- xyz="-3.30620241739688E-08 0.0336073824875323 1.55544594530876E-07" -->
+  <!-- RBdrive link -->
+  <link
+    name="RB_drive_link">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.507113050935727" />
+      <inertia
+        ixx="0.00111884294010658"
+        ixy="6.40656195963382E-11"
+        ixz="4.50410270980237E-14"
+        iyy="0.00183459882798548"
+        iyz="-3.01405043000091E-10"
+        izz="0.00111884294014766" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://roma_car/meshes/RB_drive_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <!-- <cylinder radius="0.067" length="0.07" /> -->
+        <mesh
+          filename="package://roma_car/meshes/RB_drive_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <!-- RBdirve joint -->
+  <joint
+    name="RB_drive_joint"
+    type="continuous">
+    <origin
+      xyz="0 -0.0645 0"
+      rpy="0 0 0" />
+    <parent
+      link="RB_susp_link" />
+    <child
+      link="RB_drive_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+
+  <!-- 添加transmission -->
+  <!-- <transmission name="LF_drive_joint_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="LF_drive_joint">
+       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="LF_drive_joint_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </actuator>
+  </transmission>
+
+  <transmission name="RF_drive_joint_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="RF_drive_joint">
+       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="RF_drive_joint_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </actuator>
+  </transmission>
+
+  <transmission name="LB_drive_joint_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="LB_drive_joint">
+       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="LB_drive_joint_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </actuator>
+  </transmission> -->
+
+  <!-- <transmission name="RB_drive_joint_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="RB_drive_joint">
+       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint> -->
+    <!-- <actuator name="RB_drive_joint_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </actuator>
+  </transmission> -->
+
+  <!-- <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/ackermann_car</robotNamespace>
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+    </plugin>
+  </gazebo> -->
+  <!-- <gazebo reference="LF_steer_joint">
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/ackermann_car</robotNamespace>
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+    </plugin>
+  </gazebo> -->
+</robot>
