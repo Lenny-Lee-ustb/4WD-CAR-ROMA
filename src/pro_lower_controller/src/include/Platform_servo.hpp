@@ -23,12 +23,12 @@
 
 #define DXL_FL_ID                          0                   // Dynamixel#Fl ID: 0
 #define DXL_FL_MINIMUM_POSITION_VALUE      1155             // FL ID 0  MIN
-#define DXL_FL_MID_POSITION_VALUE          1510             // FL ID 0  MIDDLE
+#define DXL_FL_MID_POSITION_VALUE          1498             // FL ID 0  MIDDLE
 #define DXL_FL_MAXIMUM_POSITION_VALUE      1920              // FL ID 0  MAX
 
 #define DXL_FR_ID                          1                   // Dynamixel#Fr ID: 1
 #define DXL_FR_MINIMUM_POSITION_VALUE      1669             // FR ID 1  MIN
-#define DXL_FR_MID_POSITION_VALUE          2000             // FR ID 1  MIDDLE
+#define DXL_FR_MID_POSITION_VALUE          2011             // FR ID 1  MIDDLE
 #define DXL_FR_MAXIMUM_POSITION_VALUE      2470              // FR ID 1  MAX
 
 #define DXL_RESOLUTION                     4096 // resolution of the servo

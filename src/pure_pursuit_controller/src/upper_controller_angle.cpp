@@ -100,6 +100,8 @@ void UpperController::controlLoopCB(const ros::TimerEvent &) {
     double theta = getYawFromPose(ForwardPose);
     double d_theta = theta - thetar;
     double slow_factor = 1.0- fabs(pow(d_theta/3.14,3));
+
+
     if (foundForwardPt) {
         if (!goal_reached) {
           // PID control

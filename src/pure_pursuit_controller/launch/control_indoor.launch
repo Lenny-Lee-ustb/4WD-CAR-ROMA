@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
     <node pkg="path_load" type="path_load.py" name="path_loader" >
-        <param name="file_path" value="$(find path_load)/src/double-lane.csv" />
+        <param name="file_path" value="$(find path_load)/src/half-circle.csv" />
         <param name="pub_hz" value="3" />
     </node>
     
@@ -21,7 +21,7 @@
         <param name = "goalRadius" type="double" value = "0.5"/>
         <param name = "goal_pose_err" type="double" value = "1.0"/>
 
-        <param name = "baseSpeed" type="double" value = "2.5"/>
+        <param name = "baseSpeed" type="double" value = "1.5"/>
         <param name = "rot_angle" type="double" value = "0.0"/>
 
         <param name = "P_Long" type="double" value = "20.0"/>

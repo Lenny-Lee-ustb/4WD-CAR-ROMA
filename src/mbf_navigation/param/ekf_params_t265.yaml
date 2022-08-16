@@ -1,5 +1,5 @@
-frequency: 40
-sensor_timeout: 0.025
+frequency: 100
+sensor_timeout: 0.015
 two_d_mode: true
 transform_time_offset: 0.0001
 transform_timeout: 0.025
