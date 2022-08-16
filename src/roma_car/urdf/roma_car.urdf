@@ -4,6 +4,15 @@
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot
   name="roma_car">
+  <!-- 添加虚拟根链接 base_footprint-->
+  <!-- <link 
+    name="base_footprint">
+    <visual>
+      <geometry>
+        <sphere radius="0.001">
+      </geometry>
+    </visual>
+  </link> -->
   <link
     name="base_link">
     <inertial>
@@ -44,67 +53,15 @@
       </geometry>
     </collision>
   </link>
-  <link
-    name="LF_susp_link">
-    <inertial>
-      <origin
-        xyz="0.00207166156705108 -0.00293424254545202 -1.25045031098767E-06"
-        rpy="0 0 0" />
-      <mass
-        value="0.0678865224651951" />
-      <inertia
-        ixx="3.04921474473283E-05"
-        ixy="1.92137892493573E-06"
-        ixz="-2.66341595719842E-09"
-        iyy="3.6288677709521E-05"
-        iyz="-3.45448735906514E-09"
-        izz="2.73221018835434E-05" />
-    </inertial>
-    <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://roma_car/meshes/LF_susp_link.STL" />
-      </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
-      </material>
-    </visual>
-    <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://roma_car/meshes/LF_susp_link.STL" />
-      </geometry>
-    </collision>
-  </link>
-  <joint
-    name="LF_susp_joint"
-    type="prismatic">
-    <origin
-      xyz="0.202 0.14049 0.0274"
-      rpy="0 0 0" />
-    <parent
-      link="base_link" />
-    <child
-      link="LF_susp_link" />
-    <axis
-      xyz="0 0 -1" />
-    <limit
-      lower="-0.03"
-      upper="0.03"
-      effort="1"
-      velocity="1"/>
-    <dynamics 
-      damping= "0.1"
-      friction = "0.0" />
-  </joint>
+  <!-- 添加base_link到base_footprint之间的fixed关节 -->
+  <!-- <joint
+    name="baselink2footprint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint> -->
+
+  <!-- LFSteer link-->
   <link
     name="LF_steer_link">
     <inertial>
@@ -145,14 +102,15 @@
       </geometry>
     </collision>
   </link>
+  <!-- LFSteer joint -->
   <joint
     name="LF_steer_joint"
     type="revolute">
     <origin
-      xyz="0 0 0"
+      xyz="0.202 0.14049 0.0274"
       rpy="0 0 0" />
     <parent
-      link="LF_susp_link" />
+      link="base_link" />
     <child
       link="LF_steer_link" />
     <axis
@@ -163,6 +121,71 @@
       effort="3.0"
       velocity="5.0" />
   </joint>
+  <!-- LFsus link -->
+  <link
+    name="LF_susp_link">
+    <inertial>
+      <origin
+        xyz="0.00207166156705108 -0.00293424254545202 -1.25045031098767E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.0678865224651951" />
+      <inertia
+        ixx="3.04921474473283E-05"
+        ixy="1.92137892493573E-06"
+        ixz="-2.66341595719842E-09"
+        iyy="3.6288677709521E-05"
+        iyz="-3.45448735906514E-09"
+        izz="2.73221018835434E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://roma_car/meshes/LF_susp_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://roma_car/meshes/LF_susp_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <!-- LFsus joint -->
+  <joint
+    name="LF_susp_joint"
+    type="prismatic">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="LF_steer_link" />
+    <child
+      link="LF_susp_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-0.03"
+      upper="0.03"
+      effort="1"
+      velocity="1" />
+    <dynamics 
+      damping= "0.1"
+      friction = "0.0" />
+  </joint>
+ 
+  <!-- LFdrivelink -->
   <link
     name="LF_drive_link">
     <inertial>
@@ -203,6 +226,7 @@
       </geometry>
     </collision>
   </link>
+  <!-- LFdrive joint -->
   <joint
     name="LF_drive_joint"
     type="revolute">
@@ -210,78 +234,19 @@
       xyz="0 0.0645 0"
       rpy="0 0 0" />
     <parent
-      link="LF_steer_link" />
+      link="LF_susp_link" />
     <child
       link="LF_drive_link" />
     <axis
-      xyz="0 -0.999999999999973 0" />
+      xyz="0 -1 0" />
     <limit
       lower="0"
       upper="0"
       effort="1.6"
       velocity="1000" />
   </joint>
-  <link
-    name="RF_susp_link">
-    <inertial>
-      <origin
-        xyz="0.00207165769373031 0.00293424524332137 1.25427536733919E-06"
-        rpy="0 0 0" />
-      <mass
-        value="0.0678865123621938" />
-      <inertia
-        ixx="3.0492145277787E-05"
-        ixy="-1.92138446027928E-06"
-        ixz="2.66322668060124E-09"
-        iyy="3.62886633228721E-05"
-        iyz="-3.45483511128314E-09"
-        izz="2.73220927297138E-05" />
-    </inertial>
-    <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://roma_car/meshes/RF_susp_link.STL" />
-      </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
-      </material>
-    </visual>
-    <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://roma_car/meshes/RF_susp_link.STL" />
-      </geometry>
-    </collision>
-  </link>
-  <joint
-    name="RF_susp_joint"
-    type="prismatic">
-    <origin
-      xyz="0.202 -0.1401 0.024747"
-      rpy="0 0 0" />
-    <parent
-      link="base_link" />
-    <child
-      link="RF_susp_link" />
-    <axis
-      xyz="0 0 -1" />
-    <limit
-      lower="-0.03"
-      upper="0.03"
-      effort="1"
-      velocity="1" />
-    <dynamics 
-      damping= "0.1"
-      friction = "0.0" />
-  </joint>
+
+  <!-- RFSteer link -->
   <link
     name="RF_steer_link">
     <inertial>
@@ -322,14 +287,15 @@
       </geometry>
     </collision>
   </link>
+  <!-- RFSteer joint -->
   <joint
     name="RF_steer_joint"
     type="revolute">
     <origin
-      xyz="0 0 0"
+      xyz="0.202 -0.1401 0.024747"
       rpy="0 0 0" />
     <parent
-      link="RF_susp_link" />
+      link="base_link" />
     <child
       link="RF_steer_link" />
     <axis
@@ -340,7 +306,72 @@
       effort="3.0"
       velocity="5.0" />
   </joint>
+  <!-- RFsusp link -->
   <link
+    name="RF_susp_link">
+    <inertial>
+      <origin
+        xyz="0.00207165769373031 0.00293424524332137 1.25427536733919E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.0678865123621938" />
+      <inertia
+        ixx="3.0492145277787E-05"
+        ixy="-1.92138446027928E-06"
+        ixz="2.66322668060124E-09"
+        iyy="3.62886633228721E-05"
+        iyz="-3.45483511128314E-09"
+        izz="2.73220927297138E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://roma_car/meshes/RF_susp_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://roma_car/meshes/RF_susp_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <!-- RFsus joint -->
+  <joint
+    name="RF_susp_joint"
+    type="prismatic">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="RF_steer_link" />
+    <child
+      link="RF_susp_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-0.03"
+      upper="0.03"
+      effort="1"
+      velocity="1" />
+    <dynamics 
+      damping= "0.1"
+      friction = "0.0" />
+  </joint>
+
+  <!-- RFdrive link -->
+   <link
     name="RF_drive_link">
     <inertial>
       <origin
@@ -380,6 +411,7 @@
       </geometry>
     </collision>
   </link>
+  <!-- RFdrive joint -->
   <joint
     name="RF_drive_joint"
     type="revolute">
@@ -387,7 +419,7 @@
       xyz="0 -0.0645 0"
       rpy="0 0 0" />
     <parent
-      link="RF_steer_link" />
+      link="RF_susp_link" />
     <child
       link="RF_drive_link" />
     <axis
@@ -398,6 +430,7 @@
       effort="1.6"
       velocity="1000" />
   </joint>
+  <!-- LBsus link -->
   <link
     name="LB_susp_link">
     <inertial>
@@ -438,6 +471,7 @@
       </geometry>
     </collision>
   </link>
+  <!-- LBsus joint -->
   <joint
     name="LB_susp_joint"
     type="prismatic">
@@ -459,6 +493,7 @@
       damping= "0.1"
       friction = "0.0" />
   </joint>
+  <!-- LBdrive link -->
   <link
     name="LB_drive_link">
     <inertial>
@@ -499,6 +534,7 @@
       </geometry>
     </collision>
   </link>
+  <!-- LBdrive joint -->
   <joint
     name="LB_drive_joint"
     type="revolute">
@@ -517,6 +553,7 @@
       effort="1.6"
       velocity="1000" />
   </joint>
+  <!-- RBsus link -->
   <link
     name="RB_susp_link">
     <inertial>
@@ -557,6 +594,7 @@
       </geometry>
     </collision>
   </link>
+  <!-- RBsus joint -->
   <joint
     name="RB_susp_joint"
     type="prismatic">
@@ -578,6 +616,7 @@
       damping= "0.1"
       friction = "0.0" />
   </joint>
+  <!-- RBdrive link -->
   <link
     name="RB_drive_link">
     <inertial>
@@ -618,6 +657,7 @@
       </geometry>
     </collision>
   </link>
+  <!-- RBdirve joint -->
   <joint
     name="RB_drive_joint"
     type="revolute">

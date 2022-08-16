@@ -12,3 +12,13 @@ foreach(dir config launch meshes urdf)
 	install(DIRECTORY ${dir}/
 		DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/${dir})
 endforeach(dir)
+
+catkin_install_python(PROGRAMS
+	scripts/control_plugin.py
+	DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+# catkin_install_python(PROGRAMS
+# 	scripts/test1.py
+# 	DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+# )

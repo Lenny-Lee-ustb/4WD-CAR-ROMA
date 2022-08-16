@@ -1,9 +1,12 @@
 <launch>
   <arg
     name="model" />
+  <!-- <param
+    name="robot_description"
+    textfile="$(find roma_car)/urdf/roma_car.urdf" /> -->
   <param
     name="robot_description"
-    textfile="$(find roma_car)/urdf/roma_car.urdf" />
+    command="$(find xacro)/xacro $(find roma_car)/urdf/roma_car.urdf.xacro" />
   <node
     name="joint_state_publisher_gui"
     pkg="joint_state_publisher_gui"
@@ -16,5 +19,5 @@
     name="rviz"
     pkg="rviz"
     type="rviz"
-    args="-d $(find roma_car)/urdf.rviz" />
+    args="-d $(find roma_car)/config/show-roma-car.rviz" />
 </launch>

@@ -1,0 +1,89 @@
+<?xml version='1.0'?>
+
+<launch>
+
+    <!-- 加载yaml参数 给ns -->
+    <group ns="ackermann_car">
+        <rosparam file="$(find ackermann_car_control)/config/ackermann_car_control_gazebo_test.yaml" command="load" />
+    </group>
+
+        <!-- 加载控制器参数 -->
+    <!-- <param name='/ackermann_car/LF_drive_joint_controller/joint' value='LF_drive_joint' />
+    <param name='/ackermann_car/LB_drive_joint_controller/joint' value='LB_drive_joint' />
+    <param name='/ackermann_car/RF_drive_joint_controller/joint' value='RF_drive_joint' /> -->
+    <param name='/ackermann_car/RB_drive_joint_controller/joint' value='RB_drive_joint' />
+
+    <param
+        name="/ackermann_car/robot_description"
+        command="$(find xacro)/xacro $(find roma_car)/urdf/roma_car_gazebo_test.urdf.xacro" />
+
+    <!-- spawn_model -->
+    <node
+        name="spawn_model"
+        pkg="gazebo_ros"
+        type="spawn_model"
+        args="-urdf -param /ackermann_car/robot_description -x 0 -y 0 -z 0.05 -model ackermann_car" 
+        output="screen" />
+
+    <!-- 和下面重复 -->
+    <!-- controller_manager -->
+    <!-- <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+        output="screen" ns="/ackermann_car" 
+        args="RB_drive_joint_controller joint_state_controller"
+    /> -->
+    <!-- controller产卵器加ns模型显示会出问题 不加就没问题 问题关键 
+    不加ns 模型显示正常 但是node joint_controller_spawner没有产生controller/state(command)话题 不发送joint_states话题
+    加ns模型会显示有问题 node joint_controller_spawner会消失 有controller/state(command)话题 发送joint_states话题-->
+    <!-- <node name="joint_controller_spawner" pkg="controller_manager" type="controller_manager"
+    args="spawn RB_drive_joint_controller joint_state_controller"
+    respawn="false" output="screen"/> -->
+    <node name='joint_controller_manager'
+        pkg='controller_manager' type='spawner' respawn='false' output='screen' 
+        ns='ackermann_car' 
+        args='RB_drive_joint_controller joint_state_controller' />
+
+        <!-- LF_drive_joint_controller RF_drive_joint_controller 
+        LB_drive_joint_controller LF_susp_joint_controller RF_susp_joint_controller
+        LB_susp_joint_controller RB_susp_joint_controller
+        LF_steer_joint_controller RF_steer_joint_controller -->
+
+    <include
+        file="$(find gazebo_ros)/launch/empty_world.launch" />
+
+    <!-- <node
+        name="fake_joint_calibration"
+        pkg="rostopic"
+        type="rostopic"
+        args="pub /calibrated std_msgs/Bool true" /> -->
+    <!-- <node
+        name="tf_footprint_base"
+        pkg="tf"
+        type="static_transform_publisher"
+        args="0 0 0 0 0 0 base_link base_footprint 40" /> -->
+
+
+
+    <!-- robot_state_publisher -->
+    <!-- robot_state_publisher会订阅joint_states话题 发到tf -->
+    <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+        respawn="false" output="screen" /> -->
+
+
+
+    <!--  joint_state_publisher不能加ns -->
+    <!-- <node
+        name="joint_state_publisher_gui"
+        pkg="joint_state_publisher_gui"
+        type="joint_state_publisher_gui" /> -->
+
+    <!-- 不能加ns 会报错 -->
+    <!-- <node
+        ns="/ackermann_car"
+        pkg="joint_state_publisher"
+        type="joint_state_publisher"
+        name="joint_state_publisher" /> -->
+
+    <!-- joint_state_publisher和其gui都不加 无报错 但是模型有问题 -->
+
+        
+</launch>
