@@ -13,9 +13,9 @@
 
     <!-- 2. setup tf (amcl+ekf) -->
     <!-- Map server -->
-    <node name="map_server" pkg="map_server" type="map_server" args="$(find mbf_navigation)/maps/floor-6.yaml"/>
+    <!-- <node name="map_server" pkg="map_server" type="map_server" args="$(find mbf_navigation)/maps/floor-6.yaml"/> -->
     <!-- amcl -->
-    <include file="$(find mbf_navigation)/launch/includes/amcl.launch.xml"/>
+    <!-- <include file="$(find mbf_navigation)/launch/includes/amcl.launch.xml"/> -->
     <!-- ekf -->
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true">
         <rosparam command="load" file="$(find mbf_navigation)/param/ekf_params_t265.yaml" />

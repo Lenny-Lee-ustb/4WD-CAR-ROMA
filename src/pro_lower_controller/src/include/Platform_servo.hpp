@@ -23,7 +23,7 @@
 
 #define DXL_FL_ID                          0                   // Dynamixel#Fl ID: 0
 #define DXL_FL_MINIMUM_POSITION_VALUE      1155             // FL ID 0  MIN
-#define DXL_FL_MID_POSITION_VALUE          1498             // FL ID 0  MIDDLE
+#define DXL_FL_MID_POSITION_VALUE          1530             // FL ID 0  MIDDLE
 #define DXL_FL_MAXIMUM_POSITION_VALUE      1920              // FL ID 0  MAX
 
 #define DXL_FR_ID                          1                   // Dynamixel#Fr ID: 1
