@@ -32,7 +32,7 @@
 
     <!-- spawn controller node -->
     <node pkg="pro_lower_controller" type="pro_lower_platform" name="pro_lower_platform" output="screen">
-        <param name="canSeries"     type="string"    value="can1"/>
+        <param name="canSeries"     type="string"    value="can2"/>
         <param name="speedMax"     type="double"    value="3.5"/>
         <param name="speedMin"     type="double"    value="-1.5"/>
     </node>

@@ -1,0 +1,4 @@
+KERNEL=="ttyUSB*", ATTRS{interface}=="Quad RS232-HS", ATTRS{bInterfaceNumber}=="00", MODE:="0777", SYMLINK+="imu"
+KERNEL=="ttyUSB*", ATTRS{interface}=="Quad RS232-HS", ATTRS{bInterfaceNumber}=="01", MODE:="0777", SYMLINK+="servo"
+KERNEL=="ttyUSB*", ATTRS{interface}=="Quad RS232-HS", ATTRS{bInterfaceNumber}=="02", MODE:="0777", SYMLINK+="sbus"
+KERNEL=="ttyUSB*", ATTRS{interface}=="Quad RS232-HS", ATTRS{bInterfaceNumber}=="03", MODE:="0777", SYMLINK+="blank"

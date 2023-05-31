@@ -3,14 +3,14 @@
 #include "include/sbus_serial_driver.h"
 #include "include/Sbus.h"
 
-#define CAR_LENGTH 0.404 //m
+#define CAR_LENGTH 0.494 //m
 #define CAR_WIDTH 0.281 //m
 #define MAX_STEER 0.8 //rad
 #define MIN_STEER -0.8 //rad
 #define MOTOR_RATIO 5.18 // input/output
 #define WHEEL_RADIUS 0.07 // wheel radius of 1/10 car
 #define WHEEL_OFFSET 0.03 //m
-#define MAX_SPPED 5.0 // 12.0m/s at 9000rpm
+#define MAX_SPPED 1.0 // 12.0m/s at 9000rpm
 #define MIN_SPPED -1.0 // 12.0m/s at 9000rpm
 
 ros::Publisher motorInfoPub, servoInfoPub;
@@ -25,6 +25,8 @@ double frictionTor = 0.020;
 double vt_cmd,delta_cmd;
 
 int  moveable_in, direct_in, control_in = 0;
+// int  moveable_in, direct_in = 1
+// int  control_in = 0;
 bool failsafe, frame_lost = 0;
 
 Motor3508 motor[4];
@@ -34,7 +36,6 @@ void sbusCB(const sbus_serial::Sbus::ConstPtr& sbus){
     int deadband_speed = 30;
     int deadband_steer = 5;
     int speedSbusIn, steerSbusIn = 0; // from upper controller   
-
     speedSbusIn = sbus->mappedChannels[2];
     steerSbusIn = sbus->mappedChannels[3] - 500;
     // remap steer angle to symatric[-500, 500]
@@ -75,7 +76,7 @@ void CmdMux(){
         }
         else{
             // ROS_ERROR("RC NOT enable, please toggle SWA to down!!");
-            ROS_WARN("moveable_in=%d, control_in=%d", !!moveable_in, !!control_in);
+            ROS_INFO("moveable_in=%d, control_in=%d", !!moveable_in, !!control_in);
         }
         // ROS_WARN("input speed is: %lf, %d", vt_cmd, speedSbusIn);
         // ROS_WARN("input steer is: %lf, %d", delta_cmd, steerSbusIn);
